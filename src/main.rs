@@ -1,8 +1,9 @@
-use serde::Serialize;
 use std::env::var;
-use structopt::StructOpt;
-use reqwest::StatusCode;
 use std::process::exit;
+
+use serde::Serialize;
+use reqwest::StatusCode;
+use structopt::StructOpt;
 
 const ENDPOINT: &'static str = "https://api.github.com/user/repos";
 const ORG_ENDPOINT: &'static str = "https://api.github.com/orgs/{}/repos";
@@ -48,6 +49,9 @@ struct RepoParams {
     #[serde(skip_serializing)]
     #[structopt(short = "o", long = "org", help = "Creates the repo under an organization. Requires you have CREATE REPO permissions in that org.")]
     org: Option<String>,
+    #[serde(skip_serializing)]
+    #[structopt(short = "v", long = "verbose", help = "Prints http response data.")]
+    verbose: bool,
 }
 
 impl Default for RepoParams {
@@ -68,6 +72,7 @@ impl Default for RepoParams {
             allow_merge_commit: None,
             allow_rebase_merge: None,
             org: None,
+            verbose: false,
         }
     }
 }
@@ -76,13 +81,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let params = RepoParams::from_args();
     let body = serde_json::to_string(&params)?;
 
-    let token = if let Ok(token) = var("GITHUB_REPO_TOKEN") {
-        token
-    } else {
+    let token = var("GITHUB_REPO_TOKEN").unwrap_or_else(|_| {
         eprintln!("You must add a token with (public) REPO scope to the env variable GITHUB_REPO_TOKEN: https://github.com/settings/tokens");
         std::process::exit(1);
-    };
-
+    });
 
     let client = reqwest::Client::new();
     let endpoint = if let Some(org) = params.org {
@@ -95,6 +97,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .body(body)
         .header("Authorization", format!("token {}", token))
         .send()?;
+
+    if params.verbose {
+        println!("{:#?}", &result);
+    }
 
     let status = result.status();
     let headers = result.headers();

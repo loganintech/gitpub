@@ -342,7 +342,7 @@ dependencies = [
 
 [[package]]
 name = "github_repo_creator"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "reqwest 0.9.14 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.90 (registry+https://github.com/rust-lang/crates.io-index)",
