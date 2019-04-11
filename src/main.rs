@@ -14,37 +14,37 @@ const ORG_ENDPOINT: &'static str = "https://api.github.com/orgs/{}/repos";
     about = "A small program to create github repos from the command line."
 )]
 struct RepoParams {
-    #[structopt(short = "n", long = "name")]
+    #[structopt(short = "n", long = "name", help = "The name of the new repository.")]
     name: String,
-    #[structopt(short = "d", long = "description")]
+    #[structopt(short = "d", long = "description", help = "A short description of the repository.")]
     description: Option<String>,
-    #[structopt(long = "homepage")]
+    #[structopt(long = "homepage", help = "A URL with more information about the repository.")]
     homepage: Option<String>,
     #[structopt(short = "p", long = "private", help = "Requires 'repo' scope on your personal access token")]
     private: Option<bool>,
-    #[structopt(short = "i", long = "issues")]
+    #[structopt(short = "i", long = "issues", help = "Enable or disable issues for this repo. Github defaults this to true.")]
     has_issues: Option<bool>,
-    #[structopt(short = "j", long = "projects")]
+    #[structopt(short = "j", long = "projects", help = "Enables or disables projects for this repo. Github defaults this to true.")]
     has_projects: Option<bool>,
-    #[structopt(short = "w", long = "wiki")]
+    #[structopt(short = "w", long = "wiki", help = "Enables or disables wikis for this repo. Github defaults this to true.")]
     has_wiki: Option<bool>,
-    #[structopt(short = "t", long = "team")]
+    #[structopt(short = "t", long = "team", help = "Id of the team that has access to this repo. Only valid when using --org.")]
     team_id: Option<u32>,
-    #[structopt(short = "a", long = "auto-init")]
+    #[structopt(short = "a", long = "auto-init", help = "Creates an initial commit with empty README.md. Github defaults this to false.")]
     auto_init: Option<bool>,
     #[structopt(
         short = "g",
         long = "gitignore",
-        help = "Language template: ex 'Rust'"
+        help = "Language template: ex 'Rust'. View more templates at https://github.com/github/gitignore"
     )]
     gitignore_template: Option<String>,
-    #[structopt(short = "l", long = "license")]
+    #[structopt(short = "l", long = "license", help = "License template: ex 'mit' or 'mpl-2.0'. View more at https://choosealicense.com/")]
     license_template: Option<String>,
-    #[structopt(short = "s", long = "squash")]
+    #[structopt(short = "s", long = "squash", help = "Enables or disables squash-merging for this repo. Github defaults this to true.")]
     allow_squash_merge: Option<bool>,
-    #[structopt(short = "m", long = "merge")]
+    #[structopt(short = "m", long = "merge", help = "Enables or disables merging with a merge commit. Github defaults this to true.")]
     allow_merge_commit: Option<bool>,
-    #[structopt(short = "r", long = "rebase")]
+    #[structopt(short = "r", long = "rebase", help = "Enables or disables rebase-merging for this repo. Github defaults this to true.")]
     allow_rebase_merge: Option<bool>,
     #[serde(skip_serializing)]
     #[structopt(short = "o", long = "org", help = "Creates the repo under an organization. Requires you have CREATE REPO permissions in that org.")]
