@@ -1,9 +1,11 @@
 use serde::Serialize;
-use serde_json::to_string;
 use std::env::var;
 use structopt::StructOpt;
+use reqwest::StatusCode;
+use std::process::exit;
 
 const ENDPOINT: &'static str = "https://api.github.com/user/repos";
+const ORG_ENDPOINT: &'static str = "https://api.github.com/orgs/{}/repos";
 
 #[derive(Serialize, StructOpt)]
 #[structopt(
@@ -17,7 +19,7 @@ struct RepoParams {
     description: Option<String>,
     #[structopt(long = "homepage")]
     homepage: Option<String>,
-    #[structopt(short = "p", long = "private")]
+    #[structopt(short = "p", long = "private", help = "Requires 'repo' scope on your personal access token")]
     private: Option<bool>,
     #[structopt(short = "i", long = "issues")]
     has_issues: Option<bool>,
@@ -30,7 +32,7 @@ struct RepoParams {
     #[structopt(short = "a", long = "auto-init")]
     auto_init: Option<bool>,
     #[structopt(
-        short = "gl",
+        short = "g",
         long = "gitignore",
         help = "Language template: ex 'Rust'"
     )]
@@ -43,6 +45,9 @@ struct RepoParams {
     allow_merge_commit: Option<bool>,
     #[structopt(short = "r", long = "rebase")]
     allow_rebase_merge: Option<bool>,
+    #[serde(skip_serializing)]
+    #[structopt(short = "o", long = "org", help = "Creates the repo under an organization. Requires you have CREATE REPO permissions in that org.")]
+    org: Option<String>,
 }
 
 impl Default for RepoParams {
@@ -62,26 +67,53 @@ impl Default for RepoParams {
             allow_squash_merge: None,
             allow_merge_commit: None,
             allow_rebase_merge: None,
+            org: None,
         }
     }
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let params = RepoParams::from_args();
+    let body = serde_json::to_string(&params)?;
+
     let token = if let Ok(token) = var("GITHUB_REPO_TOKEN") {
         token
     } else {
-        eprintln!("You must add a token with REPO scope to the env variable GITHUB_REPO_TOKEN");
+        eprintln!("You must add a token with (public) REPO scope to the env variable GITHUB_REPO_TOKEN: https://github.com/settings/tokens");
         std::process::exit(1);
     };
 
-    let params = RepoParams::from_args();
-    let body = to_string(&params)?;
 
     let client = reqwest::Client::new();
-    client
-        .post(ENDPOINT)
+    let endpoint = if let Some(org) = params.org {
+        ORG_ENDPOINT.replace("{}", &org)
+    } else {
+        ENDPOINT.to_string()
+    };
+    let result = client
+        .post(&endpoint)
         .body(body)
         .header("Authorization", format!("token {}", token))
         .send()?;
+
+    let status = result.status();
+    let headers = result.headers();
+    match status {
+        StatusCode::CREATED => {
+            let apiloc = headers
+                .get("location")
+                .and_then(|x| x.to_str().ok())
+                .unwrap_or("https://github.com");
+            let apiloc = apiloc.replace("api.", "");
+            let apiloc = apiloc.replace("repos/", "");
+            println!("Repo created: {}", apiloc);
+        },
+        StatusCode::UNPROCESSABLE_ENTITY => {
+            eprintln!("Github had an issue processing this request. Perhaps the repository already exists, or you're using an unsupported option. e.g. Enabling projects on a repo in an org that has them disabled.");
+            exit(2);
+        },
+        _ => { eprintln!("An unknown response was sent from github."); exit(3); },
+    };
+
     Ok(())
 }

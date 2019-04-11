@@ -1,16 +1,23 @@
-## Gitpo
+# Gitpo
 
 A small program to automagically create github repositories.
+
+## Setup
+
+1. Create a personal access token with repo scope from https://github.com/settings/tokens
+2. Set the environment variable `GITHUB_REPO_TOKEN` to the generated personal access token.
+
+_Note:_ If you want to create org repositories the token also requires `org` scope.
 
 Usage:
 
 ```
-Github Repo Creator 0.1.0
+Github Repo Creator 0.2.0
 Logan Saso <logansaso@gmail.com>
 A small program to create github repos from the command line.
 
 USAGE:
-    gitpo [OPTIONS] --name <name>
+    github_repo_creator.exe [OPTIONS] --name <name>
 
 FLAGS:
     -h, --help       Prints help information
@@ -29,6 +36,7 @@ OPTIONS:
         --homepage <homepage>
     -l, --license <license_template>
     -n, --name <name>
-    -p, --private <private>
+    -o, --org <org>                         Creates the repo under an organization. Requires you have CREATE REPO permissions in that org.
+    -p, --private <private>                 Requires 'repo' scope on your personal access token
     -t, --team <team_id>
 ```
