@@ -1,0 +1,11 @@
+[package]
+name = "github_repo_creator"
+version = "0.1.0"
+authors = ["Logan Saso <logansaso@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+reqwest = "0.9.14"
+serde = { version = "1.0.90", features = [ "derive" ] }
+serde_json = "1.0.39"
+structopt = "0.2.15"
