@@ -5,13 +5,19 @@ use structopt::StructOpt;
 
 #[derive(Serialize, StructOpt)]
 pub struct GithubArgs {
-    #[structopt(short = "n", long = "name", help = "The name of the new repository.")]
+    #[structopt(
+        short = "n",
+        long = "name",
+        help = "The name of the new repository.",
+        index = 2
+    )]
     name: String,
     #[structopt(
         short = "k",
         long = "token",
         help = "A personal access token. Alternatively read from GITHUB_REPO_TOKEN env variable",
-        env = "GITHUB_REPO_TOKEN"
+        env = "GITHUB_REPO_TOKEN",
+        index = 1
     )]
     #[serde(skip_serializing)]
     pub token: String,

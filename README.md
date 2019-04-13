@@ -1,8 +1,8 @@
-# Gitpo
+# Gitpub
 
 A small program to automagically create github repositories.
 
-## Setup
+## Github Setup
 
 1. Create a personal access token with repo scope from https://github.com/settings/tokens
 2. Set the environment variable `GITHUB_REPO_TOKEN` to the generated personal access token.
@@ -49,21 +49,24 @@ OPTIONS:
     -s, --squash <allow_squash_merge>       Enables or disables squash-merging for this repo. Defaults to true.
     -a, --auto-init <auto_init>             Creates an initial commit with empty README.md. Defaults to false.
     -d, --description <description>         A short description of the repository.
-    -g, --gitignore <gitignore_template>    Language template: ex 'Rust'. View more templates at
-                                            https://github.com/github/gitignore
+    -g, --gitignore <gitignore_template>    Language template: ex 'Rust'. View more templates at https://github.com/github/gitignore
     -i, --issues <has_issues>               Enable or disable issues for this repo. Defaults to true.
     -j, --projects <has_projects>           Enables or disables projects for this repo. Defaults to true.
     -w, --wiki <has_wiki>                   Enables or disables wikis for this repo. Defaults to true.
         --homepage <homepage>               A URL with more information about the repository.
-    -l, --license <license_template>        License template: ex 'mit' or 'mpl-2.0'. View more at
-                                            https://choosealicense.com/
+    -l, --license <license_template>        License template: ex 'mit' or 'mpl-2.0'. View more at https://choosealicense.com/
     -n, --name <name>                       The name of the new repository.
-    -o, --org <org>                         Creates the repo under an organization. Requires you have CREATE REPO
-                                            permissions in that org.
+    -o, --org <org>                         Creates the repo under an organization. Requires you have CREATE REPO permissions in that org.
     -p, --private <private>                 Requires 'repo' scope on your personal access token
     -t, --team <team_id>                    Id of the team that has access to this repo. Only valid when using --org.
     -k, --auth <token>                      A personal access token. Alternatively read from GITHUB_REPO_TOKEN env variable [env: GITHUB_REPO_TOKEN=<YOUR_TOKEN>]
 ```
+
+## Gitlab Setup
+
+1. Create a personal access token with api scope from https://gitlab.com/profile/personal_access_tokens
+2. Set the environment variable `GITLAB_REPO_TOKEN` to the generated personal access token.
+
 
 ### Gitlab
 ```
@@ -87,17 +90,12 @@ OPTIONS:
         --jobs <jobs_enabled>                                Enables or disables jobs for this repo.
     -m, --merge <merge_requests_enabled>                     Enables or disables merge requests. Defaults to true.
     -n, --name <name>                                        The name of the new project. Equals path if not provided.
-        --namespace_id <namespace_id>
-            Namespace for the new project (defaults to the current user’s namespace)
-
-    -p, --path <path>
-            Repository name for new project. Generated based on name if not provided (generated lowercased with dashes).
-
+        --namespace_id <namespace_id>                        Namespace for the new project (defaults to the current user’s namespace)
+    -p, --path <path>                                        Repository name for new project. Generated based on name if not provided (generated lowercased with dashes).
         --shared_runners <shared_runners_enabled>            Enables or disables shared runners for this repo.
         --snippets <snippets_enabled>                        Enables or disables snippets for this repo.
-    -k, --auth <token>
-            A personal access token. Alternatively read from GITLAB_REPO_TOKEN env variable [env: GITLAB_REPO_TOKEN=<YOUR_TOKEN>]
-        --visibility <visibility>
-            The visibility of the project `public, internal, private` [possible values: public, internal, private]
-
+    -k, --auth <token>                                       A personal access token. Alternatively read from GITLAB_REPO_TOKEN env variable [env: GITLAB_REPO_TOKEN=<YOUR_TOKEN>]
+        --visibility <visibility>                            The visibility of the project `public, internal, private` [possible values: public, internal, private]
     -w, --wiki <wiki_enabled>                                Enables or disables wikis for this repo. Defaults to true.
+```
+
