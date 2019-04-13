@@ -2,13 +2,6 @@
 
 A small program to automagically create github repositories.
 
-## Github Setup
-
-1. Create a personal access token with repo scope from https://github.com/settings/tokens
-2. Set the environment variable `GITHUB_REPO_TOKEN` to the generated personal access token.
-
-_Note:_ If you want to create org repositories the token also requires `org` scope.
-
 Usage:
 
 ```
@@ -29,6 +22,13 @@ SUBCOMMANDS:
     help      Prints this message or the help of the given subcommand(s)
 
 ```
+
+## Github Setup
+
+1. Create a personal access token with repo scope from https://github.com/settings/tokens
+2. Set the environment variable `GITHUB_REPO_TOKEN` to the generated personal access token.
+
+_Note:_ If you want to create org repositories the token also requires `org` scope.
 
 ### Github
 ```
