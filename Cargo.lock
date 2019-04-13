@@ -341,8 +341,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "github_repo_creator"
-version = "0.2.0"
+name = "gitpub"
+version = "0.1.0"
 dependencies = [
  "clap 2.33.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "reqwest 0.9.14 (registry+https://github.com/rust-lang/crates.io-index)",

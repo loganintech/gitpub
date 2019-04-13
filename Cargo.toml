@@ -1,6 +1,6 @@
 [package]
-name = "github_repo_creator"
-version = "0.2.0"
+name = "gitpub"
+version = "0.1.0"
 authors = ["Logan Saso <logansaso@gmail.com>"]
 edition = "2018"
 

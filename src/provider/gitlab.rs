@@ -9,7 +9,8 @@ pub struct GitlabArgs {
         short = "k",
         long = "token",
         help = "A personal access token. Alternatively read from GITLAB_REPO_TOKEN env variable",
-        env = "GITLAB_REPO_TOKEN"
+        env = "GITLAB_REPO_TOKEN",
+        index = 1
     )]
     #[serde(skip_serializing)]
     pub token: String,
@@ -18,7 +19,8 @@ pub struct GitlabArgs {
         long = "name",
         help = "The name of the new project. Equals path if not provided.",
         conflicts_with = "path",
-        required_unless = "path"
+        required_unless = "path",
+        index = 2
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     name: Option<String>,
@@ -27,7 +29,8 @@ pub struct GitlabArgs {
         long = "path",
         long_help = "Repository name for new project. Generated based on name if not provided (generated lowercased with dashes).",
         conflicts_with = "name",
-        required_unless = "name"
+        required_unless = "name",
+        index = 3
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     path: Option<String>,
@@ -118,7 +121,7 @@ impl Provider for GitlabArgs {
         ENDPOINT.to_string()
     }
 
-    fn extract_url(&self, src: &reqwest::header::HeaderMap) -> String {
+    fn extract_url(&self, _: &reqwest::header::HeaderMap) -> String {
         "Gitlab doesn't respond with your username or the URL to the created entity. But, it should be there.".to_string()
     }
 }
