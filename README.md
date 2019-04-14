@@ -73,6 +73,8 @@ OPTIONS:
 1. Create a personal access token with api scope from https://gitlab.com/profile/personal_access_tokens
 2. Set the environment variable `GITLAB_REPO_TOKEN` to the generated personal access token.
 
+_Note_: Optionally set the `GITLAB_USERNAME` environment variable to enable printing a link to the repo.
+
 
 ### Gitlab
 ```
