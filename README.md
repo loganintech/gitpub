@@ -32,34 +32,40 @@ _Note:_ If you want to create org repositories the token also requires `org` sco
 
 ### Github
 ```
-github_repo_creator-github 0.2.0
+gitpub-github 0.1.0
 Logan Saso <logansaso@gmail.com>
 Create a repo on github.
 
 USAGE:
-    github_repo_creator github [OPTIONS] --name <name> --auth <token>
+    gitpub github [OPTIONS] --name <name> --token <token>
 
 FLAGS:
     -h, --help       Prints help information
     -V, --version    Prints version information
 
 OPTIONS:
-    -m, --merge <allow_merge_commit>        Enables or disables merging with a merge commit. Defaults to true.
-    -r, --rebase <allow_rebase_merge>       Enables or disables rebase-merging for this repo. Defaults to true.
-    -s, --squash <allow_squash_merge>       Enables or disables squash-merging for this repo. Defaults to true.
-    -a, --auto-init <auto_init>             Creates an initial commit with empty README.md. Defaults to false.
-    -d, --description <description>         A short description of the repository.
-    -g, --gitignore <gitignore_template>    Language template: ex 'Rust'. View more templates at https://github.com/github/gitignore
-    -i, --issues <has_issues>               Enable or disable issues for this repo. Defaults to true.
-    -j, --projects <has_projects>           Enables or disables projects for this repo. Defaults to true.
-    -w, --wiki <has_wiki>                   Enables or disables wikis for this repo. Defaults to true.
-        --homepage <homepage>               A URL with more information about the repository.
-    -l, --license <license_template>        License template: ex 'mit' or 'mpl-2.0'. View more at https://choosealicense.com/
-    -n, --name <name>                       The name of the new repository.
-    -o, --org <org>                         Creates the repo under an organization. Requires you have CREATE REPO permissions in that org.
-    -p, --private <private>                 Requires 'repo' scope on your personal access token
-    -t, --team <team_id>                    Id of the team that has access to this repo. Only valid when using --org.
-    -k, --auth <token>                      A personal access token. Alternatively read from GITHUB_REPO_TOKEN env variable [env: GITHUB_REPO_TOKEN=<YOUR_TOKEN>]
+        --merge <allow_merge_commit>            Enables or disables merging with a merge commit. Defaults to true.
+        --rebase <allow_rebase_merge>           Enables or disables rebase-merging for this repo. Defaults to true.
+        --squash <allow_squash_merge>           Enables or disables squash-merging for this repo. Defaults to true.
+    -r, --initialize_with_readme <auto_init>    Creates an initial commit with empty README.md. Defaults to false.
+    -d, --description <description>             A short description of the repository.
+        --gitignore <gitignore_template>        Language template: ex 'Rust'. View more templates at
+                                                https://github.com/github/gitignore
+    -i, --issues <has_issues>                   Enable or disable issues for this repo. Defaults to true.
+        --projects <has_projects>               Enables or disables projects for this repo. Defaults to true.
+    -w, --wiki <has_wiki>                       Enables or disables wikis for this repo. Defaults to true.
+        --homepage <homepage>                   A URL with more information about the repository.
+        --license <license_template>            License template: ex 'mit' or 'mpl-2.0'. View more at
+                                                https://choosealicense.com/
+    -n, --name <name>                           The name of the new repository.
+        --org <org>                             Creates the repo under an organization. Requires you have CREATE REPO
+                                                permissions in that org.
+    -p, --private <private>                     Requires 'repo' scope on your personal access token
+        --team <team_id>                        Id of the team that has access to this repo. Only valid when using
+                                                --org.
+    -t, --token <token>                         A personal access token. Alternatively read from GITHUB_REPO_TOKEN env
+                                                variable [env: GITHUB_REPO_TOKEN=<YOUR_TOKEN>]
+
 ```
 
 ## Gitlab Setup
@@ -70,32 +76,107 @@ OPTIONS:
 
 ### Gitlab
 ```
-github_repo_creator-gitlab 0.2.0
+gitpub-gitlab 0.1.0
 Logan Saso <logansaso@gmail.com>
 Create a repo on gitlab.
 
 USAGE:
-    github_repo_creator gitlab [OPTIONS] --name <name> --path <path> --auth <token>
+    gitpub gitlab [OPTIONS] --name <name> --path <path> --token <token>
 
 FLAGS:
-    -h, --help       Prints help information
-    -V, --version    Prints version information
+    -h, --help
+            Prints help information
+
+    -V, --version
+            Prints version information
+
 
 OPTIONS:
-        --container_registry <container_registry_enabled>    Enables or disables container registry for this repo.
-        --default_branch <default_branch>                    Set default branch. Defaults to master.
-    -d, --description <description>                          A short description of the repository.
-        --import_url <import_url>                            Supply a URL to import a repo from.
-    -i, --issues <issues_enabled>                            Enable or disable issues for this repo. Defaults to true.
-        --jobs <jobs_enabled>                                Enables or disables jobs for this repo.
-    -m, --merge <merge_requests_enabled>                     Enables or disables merge requests. Defaults to true.
-    -n, --name <name>                                        The name of the new project. Equals path if not provided.
-        --namespace_id <namespace_id>                        Namespace for the new project (defaults to the current user’s namespace)
-    -p, --path <path>                                        Repository name for new project. Generated based on name if not provided (generated lowercased with dashes).
-        --shared_runners <shared_runners_enabled>            Enables or disables shared runners for this repo.
-        --snippets <snippets_enabled>                        Enables or disables snippets for this repo.
-    -k, --auth <token>                                       A personal access token. Alternatively read from GITLAB_REPO_TOKEN env variable [env: GITLAB_REPO_TOKEN=<YOUR_TOKEN>]
-        --visibility <visibility>                            The visibility of the project `public, internal, private` [possible values: public, internal, private]
-    -w, --wiki <wiki_enabled>                                Enables or disables wikis for this repo. Defaults to true.
+        --approvals_before_merge <approvals_before_merge>
+            Number of approvals required before a merge.
+
+        --ci_config_path <ci_config_path>
+            Path to CI config file.
+
+        --container_registry <container_registry_enabled>
+            Enables or disables container registry for this repo.
+
+        --default_branch <default_branch>
+            Set default branch. Defaults to master.
+
+    -d, --description <description>
+            A short description of the repository.
+
+        --import_url <import_url>
+            Supply a URL to import a repo from.
+
+    -r, --initialize_with_readme <initialize_with_readme>
+            Create a blank README in the project.
+
+    -i, --issues <issues_enabled>
+            Enable or disable issues for this repo. Defaults to true.
+
+        --jobs <jobs_enabled>
+            Enables or disables jobs for this repo.
+
+        --lfs <lfs_enabled>
+            Enables git large file support.
+
+        --merge_method <merge_method>
+            Sets the merge method.
+
+        --merge <merge_requests_enabled>
+            Enables or disables merge requests. Defaults to true.
+
+        --mirror <mirror>
+            Enables pull mirroring in a project.
+
+        --mirror_trigger_builds <mirror_trigger_builds>
+            Enables builds on pull mirroring.
+
+    -n, --name <name>
+            The name of the new project. Equals path if not provided.
+
+        --namespace_id <namespace_id>
+            Namespace for the new project (defaults to the current user’s namespace)
+
+        --discussion_resolution_required <only_allow_merge_if_all_discussions_are_resolved>
+            Requires discussions are resolved before a merge.
+
+        --pipeline_success_required <only_allow_merge_if_pipeline_succeeds>
+            Requires pipelines to succeed before a merge.
+
+        --path <path>
+            Repository name for new project. Generated based on name if not provided (generated lowercased with dashes).
+
+        --merge_request_link_on_commit <printing_merge_request_link_enabled>
+            Print the merge request link when committing to the repository.
+
+        --public_builds <public_builds>
+            Lets jobs be viewed by non-project members.
+
+        --repository_storage <repository_storage>
+            Which storage shard the repo is one. Available only to admins.
+
+        --request_access_enabled <request_access_enabled>
+            Allow users to request member access.
+
+        --shared_runners <shared_runners_enabled>
+            Enables or disables shared runners for this repo.
+
+        --snippets <snippets_enabled>
+            Enables or disables snippets for this repo.
+
+        --tag_list <tag_list>...
+            A list of tags for a repo.
+
+    -t, --token <token>
+            A personal access token. Alternatively read from GITLAB_REPO_TOKEN env variable [env: GITLAB_REPO_TOKEN=<YOUR_TOKEN>]
+
+    -p, --visibility <visibility>
+            The visibility of the project. [possible values: public, internal, private]
+
+    -w, --wiki <wiki_enabled>
+            Enables or disables wikis for this repo. Defaults to true.
 ```
 
