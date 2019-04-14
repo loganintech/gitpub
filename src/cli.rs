@@ -4,7 +4,7 @@ use structopt::StructOpt;
 #[derive(StructOpt)]
 #[structopt(
     name = "Git Publish",
-    about = "A small program to create remote github repositories on the command line.",
+    about = "A small program to create remote git repositories from the command line.",
     raw(setting = "structopt::clap::AppSettings::ColoredHelp")
 )]
 pub enum Gitpo {

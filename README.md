@@ -1,16 +1,16 @@
 # Gitpub
 
-A small program to automagically create github repositories.
+A small program to create remote git repositories from the command line.
 
 Usage:
 
 ```
 Git Publish 0.2.1
-Logan Saso <logansaso@gmail.com>
-A small program to create remote github repositories on the command line.
+Logan Saso <logansaso+tech@gmail.com>
+A small program to create remote git repositories from the command line.
 
 USAGE:
-    github_repo_creator <SUBCOMMAND>
+    gitpub <SUBCOMMAND>
 
 FLAGS:
     -h, --help       Prints help information
@@ -20,7 +20,6 @@ SUBCOMMANDS:
     github    Create a repo on github.
     gitlab    Create a repo on gitlab.
     help      Prints this message or the help of the given subcommand(s)
-
 ```
 
 ## Github Setup
@@ -33,7 +32,7 @@ _Note:_ If you want to create org repositories the token also requires `org` sco
 ### Github
 ```
 gitpub-github 0.2.1
-Logan Saso <logansaso@gmail.com>
+Logan Saso <logansaso+tech@gmail.com>
 Create a repo on github.
 
 USAGE:
@@ -64,7 +63,7 @@ OPTIONS:
         --team <team_id>                        Id of the team that has access to this repo. Only valid when using
                                                 --org.
     -t, --token <token>                         A personal access token. Alternatively read from GITHUB_REPO_TOKEN env
-                                                variable [env: GITHUB_REPO_TOKEN=<YOUR_TOKEN>]
+                                                variable [env: GITHUB_REPO_TOKEN=<YOUR_TOKEN]
 ```
 
 ## Gitlab Setup
@@ -78,7 +77,7 @@ _Note_: Optionally set the `GITLAB_USERNAME` environment variable to enable prin
 ### Gitlab
 ```
 gitpub-gitlab 0.2.1
-Logan Saso <logansaso@gmail.com>
+Logan Saso <logansaso+tech@gmail.com>
 Create a repo on gitlab.
 
 USAGE:
