@@ -47,6 +47,7 @@ OPTIONS:
         --rebase <allow_rebase_merge>           Enables or disables rebase-merging for this repo. Defaults to true.
         --squash <allow_squash_merge>           Enables or disables squash-merging for this repo. Defaults to true.
     -r, --initialize_with_readme <auto_init>    Creates an initial commit with empty README.md. Defaults to false.
+    -e, --endpoint <custom_endpoint>            Custom endpoint to enable uploading to private repos.
     -d, --description <description>             A short description of the repository.
         --gitignore <gitignore_template>        Language template: ex 'Rust'. View more templates at
                                                 https://github.com/github/gitignore
@@ -103,6 +104,9 @@ OPTIONS:
 
         --default_branch <default_branch>
             Set default branch. Defaults to master.
+
+    -e, --endpoint <custom_endpoint>
+            Allows redirection of requests to enterprise providers.
 
     -d, --description <description>
             A short description of the repository.

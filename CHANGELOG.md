@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.2] - UNRELEASED
+### Added
+
+* Custom endpoint (-e) flag allowing request redirection to enterprise providers
+
 ## [0.2.1] - 2019-04-14
 ### Changed
 * Modified Cargo manifest entry for the license

@@ -178,6 +178,14 @@ pub struct GitlabArgs {
     )]
     #[serde(skip_serializing_if = "Option::is_none")]
     initialize_with_readme: Option<bool>,
+    #[serde(skip_serializing)]
+    #[structopt(
+        short = "e",
+        long = "endpoint",
+        help = "Allows redirection of requests to enterprise providers.",
+        conflicts_with = "org"
+    )]
+    custom_endpoint: Option<String>,
 }
 //TODO: The rest of the options in https://docs.gitlab.com/ee/api/projects.html#create-project
 
@@ -201,7 +209,11 @@ impl Provider for GitlabArgs {
     }
 
     fn endpoint(&self) -> String {
-        ENDPOINT.to_string()
+        if let Some(e) = &self.custom_endpoint {
+            e.to_string()
+        } else {
+            ENDPOINT.to_string()
+        }
     }
 
     fn extract_url(&self, _: &reqwest::header::HeaderMap) -> String {

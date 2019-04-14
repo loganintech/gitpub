@@ -92,6 +92,14 @@ pub struct GithubArgs {
         help = "Creates the repo under an organization. Requires you have CREATE REPO permissions in that org."
     )]
     org: Option<String>,
+    #[serde(skip_serializing)]
+    #[structopt(
+        short = "e",
+        long = "endpoint",
+        help = "Allows redirection of requests to enterprise providers.",
+        conflicts_with = "org"
+    )]
+    custom_endpoint: Option<String>,
 }
 
 const ENDPOINT: &str = "https://api.github.com/user/repos";
@@ -103,10 +111,10 @@ impl Provider for GithubArgs {
     }
 
     fn endpoint(&self) -> String {
-        if let Some(org) = &self.org {
-            ORG_ENDPOINT.replace("{}", &org)
-        } else {
-            ENDPOINT.to_string()
+        match (&self.org, &self.custom_endpoint) {
+            (_, Some(endpoint)) => endpoint.clone(),
+            (Some(org), _) => ORG_ENDPOINT.replace("{}", &org),
+            _ => ENDPOINT.to_string(),
         }
     }
 
