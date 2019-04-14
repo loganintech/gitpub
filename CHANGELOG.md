@@ -3,7 +3,7 @@
 ## [0.2.2] - 2019-04-14
 ### Added
 
-* Custom endpoint (-e) param allowing request redirection to enterprise providers
+* Custom --endpoint (-e) param allowing request redirection to enterprise providers
 
 ## [0.2.1] - 2019-04-14
 ### Changed
