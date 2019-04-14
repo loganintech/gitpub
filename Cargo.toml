@@ -9,7 +9,7 @@ homepage = "https://docs.rs/gitpub/"
 readme = "README.md"
 keywords = ["git", "cli"]
 categories = ["command-line-utilities"]
-license-file = "LICENSE"
+license = "GPL-3.0"
 edition = "2018"
 
 [dependencies]
