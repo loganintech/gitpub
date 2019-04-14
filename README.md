@@ -5,7 +5,7 @@ A small program to create remote git repositories from the command line.
 Usage:
 
 ```
-Git Publish 0.2.1
+Git Publish 0.2.2
 Logan Saso <logansaso+tech@gmail.com>
 A small program to create remote git repositories from the command line.
 
@@ -31,7 +31,7 @@ _Note:_ If you want to create org repositories the token also requires `org` sco
 
 ### Github
 ```
-gitpub-github 0.2.1
+gitpub-github 0.2.2
 Logan Saso <logansaso+tech@gmail.com>
 Create a repo on github.
 
@@ -47,7 +47,7 @@ OPTIONS:
         --rebase <allow_rebase_merge>           Enables or disables rebase-merging for this repo. Defaults to true.
         --squash <allow_squash_merge>           Enables or disables squash-merging for this repo. Defaults to true.
     -r, --initialize_with_readme <auto_init>    Creates an initial commit with empty README.md. Defaults to false.
-    -e, --endpoint <custom_endpoint>            Custom endpoint to enable uploading to private repos.
+    -e, --endpoint <custom_endpoint>            Allows redirection of requests to enterprise providers.
     -d, --description <description>             A short description of the repository.
         --gitignore <gitignore_template>        Language template: ex 'Rust'. View more templates at
                                                 https://github.com/github/gitignore
@@ -64,7 +64,7 @@ OPTIONS:
         --team <team_id>                        Id of the team that has access to this repo. Only valid when using
                                                 --org.
     -t, --token <token>                         A personal access token. Alternatively read from GITHUB_REPO_TOKEN env
-                                                variable [env: GITHUB_REPO_TOKEN=<YOUR_TOKEN]
+                                                variable [env: GITHUB_REPO_TOKEN=<YOUR_TOKEN>]
 ```
 
 ## Gitlab Setup
@@ -77,7 +77,7 @@ _Note_: Optionally set the `GITLAB_USERNAME` environment variable to enable prin
 
 ### Gitlab
 ```
-gitpub-gitlab 0.2.1
+gitpub-gitlab 0.2.2
 Logan Saso <logansaso+tech@gmail.com>
 Create a repo on gitlab.
 
