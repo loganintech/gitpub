@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.1] - 2019-04-14
+### Changed
+* Modified Cargo manifest entry for the license
+
 ## [0.2.0] - 2019-04-14
 ### Added
 
