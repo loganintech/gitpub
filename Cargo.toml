@@ -2,6 +2,14 @@
 name = "gitpub"
 version = "0.2.0"
 authors = ["Logan Saso <logansaso@gmail.com>"]
+description = "A CLI app to create remote git repositories."
+repository = "https://github.com/loganintech/gitpub"
+documentation = "https://docs.rs/gitpub/"
+homepage = "https://docs.rs/gitpub/"
+readme = "README.md"
+keywords = ["git", "cli"]
+categories = ["command-line-utilities"]
+license-file = "LICENSE"
 edition = "2018"
 
 [dependencies]
