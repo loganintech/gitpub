@@ -5,7 +5,7 @@ A small program to automagically create github repositories.
 Usage:
 
 ```
-Git Publish 0.2.0
+Git Publish 0.2.1
 Logan Saso <logansaso@gmail.com>
 A small program to create remote github repositories on the command line.
 
@@ -32,7 +32,7 @@ _Note:_ If you want to create org repositories the token also requires `org` sco
 
 ### Github
 ```
-gitpub-github 0.1.0
+gitpub-github 0.2.1
 Logan Saso <logansaso@gmail.com>
 Create a repo on github.
 
@@ -65,7 +65,6 @@ OPTIONS:
                                                 --org.
     -t, --token <token>                         A personal access token. Alternatively read from GITHUB_REPO_TOKEN env
                                                 variable [env: GITHUB_REPO_TOKEN=<YOUR_TOKEN>]
-
 ```
 
 ## Gitlab Setup
@@ -78,7 +77,7 @@ _Note_: Optionally set the `GITLAB_USERNAME` environment variable to enable prin
 
 ### Gitlab
 ```
-gitpub-gitlab 0.1.0
+gitpub-gitlab 0.2.1
 Logan Saso <logansaso@gmail.com>
 Create a repo on gitlab.
 
