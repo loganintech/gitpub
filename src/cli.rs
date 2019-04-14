@@ -4,12 +4,21 @@ use structopt::StructOpt;
 #[derive(StructOpt)]
 #[structopt(
     name = "Git Publish",
-    about = "A small program to create remote github repositories on the command line."
+    about = "A small program to create remote github repositories on the command line.",
+    raw(setting = "structopt::clap::AppSettings::ColoredHelp")
 )]
 pub enum Gitpo {
-    #[structopt(name = "github", about = "Create a repo on github.")]
+    #[structopt(
+        name = "github",
+        about = "Create a repo on github.",
+        raw(setting = "structopt::clap::AppSettings::ColoredHelp")
+    )]
     Github(GithubArgs),
-    #[structopt(name = "gitlab", about = "Create a repo on gitlab.")]
+    #[structopt(
+        name = "gitlab",
+        about = "Create a repo on gitlab.",
+        raw(setting = "structopt::clap::AppSettings::ColoredHelp")
+    )]
     Gitlab(GitlabArgs),
 }
 
@@ -37,5 +46,4 @@ impl Provider for Gitpo {
             Gitpo::Gitlab(config) => config.extract_url(src),
         }
     }
-
 }

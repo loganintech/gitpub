@@ -5,19 +5,13 @@ use structopt::StructOpt;
 
 #[derive(Serialize, StructOpt)]
 pub struct GithubArgs {
-    #[structopt(
-        short = "n",
-        long = "name",
-        help = "The name of the new repository.",
-        index = 2
-    )]
+    #[structopt(short = "n", long = "name", help = "The name of the new repository.")]
     name: String,
     #[structopt(
-        short = "k",
+        short = "t",
         long = "token",
         help = "A personal access token. Alternatively read from GITHUB_REPO_TOKEN env variable",
-        env = "GITHUB_REPO_TOKEN",
-        index = 1
+        env = "GITHUB_REPO_TOKEN"
     )]
     #[serde(skip_serializing)]
     pub token: String,
@@ -45,7 +39,6 @@ pub struct GithubArgs {
     )]
     has_issues: Option<bool>,
     #[structopt(
-        short = "j",
         long = "projects",
         help = "Enables or disables projects for this repo. Defaults to true."
     )]
@@ -57,51 +50,44 @@ pub struct GithubArgs {
     )]
     has_wiki: Option<bool>,
     #[structopt(
-        short = "t",
         long = "team",
         help = "Id of the team that has access to this repo. Only valid when using --org.",
         requires = "org"
     )]
     team_id: Option<u32>,
     #[structopt(
-        short = "a",
-        long = "auto-init",
+        short = "r",
+        long = "initialize_with_readme",
         help = "Creates an initial commit with empty README.md. Defaults to false."
     )]
     auto_init: Option<bool>,
     #[structopt(
-        short = "g",
         long = "gitignore",
         help = "Language template: ex 'Rust'. View more templates at https://github.com/github/gitignore"
     )]
     gitignore_template: Option<String>,
     #[structopt(
-        short = "l",
         long = "license",
         help = "License template: ex 'mit' or 'mpl-2.0'. View more at https://choosealicense.com/"
     )]
     license_template: Option<String>,
     #[structopt(
-        short = "s",
         long = "squash",
         help = "Enables or disables squash-merging for this repo. Defaults to true."
     )]
     allow_squash_merge: Option<bool>,
     #[structopt(
-        short = "m",
         long = "merge",
         help = "Enables or disables merging with a merge commit. Defaults to true."
     )]
     allow_merge_commit: Option<bool>,
     #[structopt(
-        short = "r",
         long = "rebase",
         help = "Enables or disables rebase-merging for this repo. Defaults to true."
     )]
     allow_rebase_merge: Option<bool>,
     #[serde(skip_serializing)]
     #[structopt(
-        short = "o",
         long = "org",
         help = "Creates the repo under an organization. Requires you have CREATE REPO permissions in that org."
     )]
@@ -131,4 +117,5 @@ impl Provider for GithubArgs {
             .unwrap_or("https://github.com");
         src.replace("api.", "").replace("repos/", "")
     }
+
 }
