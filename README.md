@@ -188,7 +188,7 @@ OPTIONS:
 
 ## BitBucket Setup
 
-1. Create an app password with repo scope from https://bitbucket.org/account/user/JewsOfHazard/app-passwords
+1. Create an app password with repo scope from https://bitbucket.org/account/user/YOUR_USERNAME/app-passwords
 2. Set the environment variable `BITBUCKET_REPO_TOKEN` to the generated personal access token.
 3. Set the environment variable `BITBUCKET_USERNAME` to your bitbucket username.
 
