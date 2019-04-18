@@ -21,7 +21,7 @@ pub struct BitbucketArgs {
         env = "BITBUCKET_USERNAME"
     )]
     #[serde(skip_serializing)]
-    username: String,
+    pub username: String,
     #[structopt(
         short = "d",
         long = "description",
@@ -97,8 +97,8 @@ impl Provider for BitbucketArgs {
         }
     }
 
-    fn extract_url(&self, headers: &reqwest::header::HeaderMap) -> String {
-        unimplemented!()
+    fn extract_url(&self, _: &reqwest::header::HeaderMap) -> String {
+        format!("https://bitbucket.org/{}/{}", &self.username, &self.name)
     }
 
 }
