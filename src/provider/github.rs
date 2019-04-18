@@ -29,7 +29,7 @@ pub struct GithubArgs {
     #[structopt(
         short = "p",
         long = "private",
-        help = "Requires 'repo' scope on your personal access token"
+        help = "Sets the repository to private. Requires 'repo' scope on your personal access token"
     )]
     private: Option<bool>,
     #[structopt(

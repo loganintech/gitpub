@@ -2,6 +2,8 @@
 
 A small program to create remote git repositories from the command line.
 
+_Note:_ Environment variables can also be passed directly via CLI parameters, therefore setting said variables are always optional.
+
 Usage:
 
 ```
@@ -31,7 +33,7 @@ _Note:_ If you want to create org repositories the token also requires `org` sco
 
 ### Github
 ```
-gitpub-github 0.2.2
+gitpub-github 0.3.0
 Logan Saso <logansaso+tech@gmail.com>
 Create a repo on github.
 
@@ -77,7 +79,7 @@ _Note_: Optionally set the `GITLAB_USERNAME` environment variable to enable prin
 
 ### Gitlab
 ```
-gitpub-gitlab 0.2.2
+gitpub-gitlab 0.3.0
 Logan Saso <logansaso+tech@gmail.com>
 Create a repo on gitlab.
 
@@ -184,3 +186,37 @@ OPTIONS:
             Enables or disables wikis for this repo. Defaults to true.
 ```
 
+## BitBucket Setup
+
+1. Create an app password with repo scope from https://bitbucket.org/account/user/JewsOfHazard/app-passwords
+2. Set the environment variable `BITBUCKET_REPO_TOKEN` to the generated personal access token.
+3. Set the environment variable `BITBUCKET_USERNAME` to your bitbucket username.
+
+### Bitbucket
+
+```
+gitpub-bitbucket 0.3.0
+Logan Saso <logansaso+tech@gmail.com>
+Create a repo on bitbucket.
+
+USAGE:
+    gitpub bitbucket [OPTIONS] --name <name> --token <token> --username <username>
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+OPTIONS:
+    -e, --endpoint <custom_endpoint>    Allows redirection of requests to enterprise providers.
+    -d, --description <description>     A short description of the repository.
+        --fork_policy <fork_policy>     Allow public forking of this repo. [possible values: allow_forks, no_public_forks, no_forks]
+    -i, --issues <has_issues>           Enable or disable issues for this repo. Defaults to true.
+    -w, --wiki <has_wiki>               Enables or disables wikis for this repo. Defaults to true.
+    -p, --private <is_private>          Sets whether or not the repository is private.
+        --language <language>           Give bitbucket a hint about the programming language.
+    -n, --name <name>                   The name of the new repository.
+        --scm <scm>                     Control the underlying source control method. [possible values: hg, git]
+    -t, --token <token>                 A personal access token. Alternatively read from BITBUCKET_REPO_TOKEN env variable [env: BITBUCKET_REPO_TOKEN=<YOUR_APP_PASSWORD>]
+        --username <username>           Your bitbucket username. Alternatively read from BITBUCKET_USERNAME env variable [env: BITBUCKET_USERNAME=<YOUR_USERNAME>]
+        --homepage <website>            A URL with more information about the repository.
+```
