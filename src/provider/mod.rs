@@ -1,3 +1,4 @@
+pub mod azure;
 pub mod github;
 pub mod gitlab;
 
