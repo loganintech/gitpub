@@ -22,9 +22,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let request = match &config {
         Gitpo::Github(config) => request.header("Authorization", format!("token {}", config.token)),
         Gitpo::Gitlab(config) => request.header("Private-Token", config.token.to_string()),
+        Gitpo::BitBucket(config) => {
+            request.header("Authorization", format!("Bearer {}", config.token))
+        }
     };
 
+    let request = dbg!(request);
     let result = request.send()?;
+    let result = dbg!(result);
     let status = result.status();
     let headers = result.headers();
     match status {
