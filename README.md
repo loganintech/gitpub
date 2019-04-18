@@ -7,7 +7,7 @@ _Note:_ Environment variables can also be passed directly via CLI parameters, th
 Usage:
 
 ```
-Git Publish 0.2.2
+Git Publish 0.3.0
 Logan Saso <logansaso+tech@gmail.com>
 A small program to create remote git repositories from the command line.
 
