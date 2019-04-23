@@ -12,7 +12,7 @@ Logan Saso <logansaso+tech@gmail.com>
 A small program to create remote git repositories from the command line.
 
 USAGE:
-    gitpub.exe <SUBCOMMAND>
+    gitpub <SUBCOMMAND>
 
 FLAGS:
     -h, --help       Prints help information
