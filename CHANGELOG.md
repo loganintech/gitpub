@@ -3,7 +3,7 @@
 ## [0.3.0] - 2019-04-XX
 ### Added
 
-* Initial bitbucket support using app base64 encoded username:apppasword flow. [Read more about app passwords](https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html)
+* Initial bitbucket support using app base64-encoded username:apppasword flow. [Read more about app passwords](https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html)
 
 ### Changed
 
