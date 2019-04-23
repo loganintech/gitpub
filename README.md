@@ -12,16 +12,17 @@ Logan Saso <logansaso+tech@gmail.com>
 A small program to create remote git repositories from the command line.
 
 USAGE:
-    gitpub <SUBCOMMAND>
+    gitpub.exe <SUBCOMMAND>
 
 FLAGS:
     -h, --help       Prints help information
     -V, --version    Prints version information
 
 SUBCOMMANDS:
-    github    Create a repo on github.
-    gitlab    Create a repo on gitlab.
-    help      Prints this message or the help of the given subcommand(s)
+    bitbucket    Create a repo on bitbucket.
+    github       Create a repo on github.
+    gitlab       Create a repo on gitlab.
+    help         Prints this message or the help of the given subcommand(s)
 ```
 
 ## Github Setup
@@ -63,10 +64,8 @@ OPTIONS:
         --org <org>                             Creates the repo under an organization. Requires you have CREATE REPO
                                                 permissions in that org.
     -p, --private <private>                     Requires 'repo' scope on your personal access token
-        --team <team_id>                        Id of the team that has access to this repo. Only valid when using
-                                                --org.
-    -t, --token <token>                         A personal access token. Alternatively read from GITHUB_REPO_TOKEN env
-                                                variable [env: GITHUB_REPO_TOKEN=<YOUR_TOKEN>]
+        --team <team_id>                        Id of the team that has access to this repo. Only valid when using --org.
+    -t, --token <token>                         A personal access token. Alternatively read from GITHUB_REPO_TOKEN env variable [env: GITHUB_REPO_TOKEN=<YOUR_TOKEN>]
 ```
 
 ## Gitlab Setup
@@ -188,7 +187,7 @@ OPTIONS:
 
 ## BitBucket Setup
 
-1. Create an app password with repo scope from https://bitbucket.org/account/user/YOUR_USERNAME/app-passwords
+1. Create an app password with repo scope from https://bitbucket.org/account/user/<YOUR_USERNAME>/app-passwords
 2. Set the environment variable `BITBUCKET_REPO_TOKEN` to the generated personal access token.
 3. Set the environment variable `BITBUCKET_USERNAME` to your bitbucket username.
 
