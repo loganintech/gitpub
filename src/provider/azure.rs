@@ -17,14 +17,13 @@ struct GitRepoRef {
 
 #[derive(Serialize, StructOpt)]
 pub struct AzureArgs {
-
     // #[structopt(flatten)]
     // #[serde(rename = "parentRepository")]
     // parent_repository: Option<GitRepoRef>,
-
-
-
-    #[structopt(long = "project", help = "The name or project id of the new repository.")]
+    #[structopt(
+        long = "project",
+        help = "The name or project id of the new repository."
+    )]
     project: Option<String>,
     #[structopt(
         short = "t",
@@ -62,7 +61,8 @@ pub struct AzureArgs {
     custom_endpoint: Option<String>,
 }
 
-const ENDPOINT: &str = "https://dev.azure.com/{organization}/{project}/_apis/git/repositories?api-version=5.0";
+const ENDPOINT: &str =
+    "https://dev.azure.com/{organization}/{project}/_apis/git/repositories?api-version=5.0";
 
 impl Provider for AzureArgs {
     fn payload(&self) -> String {
@@ -94,5 +94,4 @@ impl Provider for AzureArgs {
     fn extract_url(&self, headers: &reqwest::header::HeaderMap) -> String {
         unimplemented!()
     }
-
 }

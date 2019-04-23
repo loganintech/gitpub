@@ -1,6 +1,6 @@
 [package]
 name = "gitpub"
-version = "0.2.2"
+version = "0.3.0"
 authors = ["Logan Saso <logansaso+tech@gmail.com>"]
 description = "A CLI app to create remote git repositories."
 repository = "https://github.com/loganintech/gitpub"
@@ -13,8 +13,9 @@ license = "GPL-3.0"
 edition = "2018"
 
 [dependencies]
-reqwest = "0.9.14"
+reqwest = "0.9.15"
 serde = { version = "1.0.90", features = [ "derive" ] }
 serde_json = "1.0.39"
 structopt = "0.2.15"
 clap = "2.33.0"
+base64 = "0.10.1"
