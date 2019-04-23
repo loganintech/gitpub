@@ -27,24 +27,28 @@ pub struct BitbucketArgs {
         long = "description",
         help = "A short description of the repository."
     )]
+    #[serde(skip_serializing_if = "Option::is_none")]
     description: Option<String>,
     #[structopt(
         short = "p",
         long = "private",
         help = "Sets whether or not the repository is private."
     )]
+    #[serde(skip_serializing_if = "Option::is_none")]
     is_private: Option<bool>,
     #[structopt(
         short = "w",
         long = "wiki",
         help = "Enables or disables wikis for this repo. Defaults to true."
     )]
+    #[serde(skip_serializing_if = "Option::is_none")]
     has_wiki: Option<bool>,
     #[structopt(
         short = "i",
         long = "issues",
         help = "Enable or disable issues for this repo. Defaults to true."
     )]
+    #[serde(skip_serializing_if = "Option::is_none")]
     has_issues: Option<bool>,
     #[structopt(
         long = "fork_policy",
@@ -53,6 +57,7 @@ pub struct BitbucketArgs {
         possible_value = "no_public_forks",
         possible_value = "no_forks"
     )]
+    #[serde(skip_serializing_if = "Option::is_none")]
     fork_policy: Option<String>,
     #[structopt(
         long = "scm",
@@ -60,6 +65,7 @@ pub struct BitbucketArgs {
         possible_value = "hg",
         possible_value = "git"
     )]
+    #[serde(skip_serializing_if = "Option::is_none")]
     scm: Option<String>,
     #[structopt(
         long = "language",
