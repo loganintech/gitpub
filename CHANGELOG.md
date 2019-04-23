@@ -8,6 +8,7 @@
 ### Changed
 
 * Slightly changed helptext for github privacy flag.
+* Github parameters are no longer serialized if they're `None`.
 
 ## [0.2.2] - 2019-04-14
 ### Added
