@@ -29,11 +29,6 @@ pub struct BitbucketArgs {
     )]
     description: Option<String>,
     #[structopt(
-        long = "homepage",
-        help = "A URL with more information about the repository."
-    )]
-    website: Option<String>,
-    #[structopt(
         short = "p",
         long = "private",
         help = "Sets whether or not the repository is private."
