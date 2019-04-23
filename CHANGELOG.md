@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.0] - 2019-04-XX
+### Added
+
+* Initial bitbucket support using app base64-encoded username:apppasword flow. [Read more about app passwords](https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html)
+
+### Changed
+
+* Slightly changed helptext for github privacy flag.
+* Github parameters are no longer serialized if they're `None`.
+
 ## [0.2.2] - 2019-04-14
 ### Added
 
@@ -7,6 +17,7 @@
 
 ## [0.2.1] - 2019-04-14
 ### Changed
+
 * Modified Cargo manifest entry for the license
 
 ## [0.2.0] - 2019-04-14

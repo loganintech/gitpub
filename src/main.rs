@@ -22,13 +22,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let request = match &config {
         Gitpo::Github(config) => request.header("Authorization", format!("token {}", config.token)),
         Gitpo::Gitlab(config) => request.header("Private-Token", config.token.to_string()),
+        Gitpo::BitBucket(config) => request.header(
+            "Authorization",
+            format!(
+                "Basic {}",
+                base64::encode(&format!("{}:{}", &config.username, &config.token))
+            ),
+        ),
     };
 
     let result = request.send()?;
     let status = result.status();
     let headers = result.headers();
     match status {
-        StatusCode::CREATED => {
+        StatusCode::OK | StatusCode::CREATED => {
             let apiloc = config.extract_url(&headers);
             println!("Repo created: {}", apiloc);
         }
