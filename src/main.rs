@@ -9,7 +9,6 @@ mod provider;
 use cli::Gitpo;
 use provider::Provider;
 
-
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let config = cli::Gitpo::from_args();
 

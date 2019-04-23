@@ -1,6 +1,6 @@
+pub mod bitbucket;
 pub mod github;
 pub mod gitlab;
-pub mod bitbucket;
 
 pub trait Provider {
     fn payload(&self) -> String;

@@ -137,5 +137,4 @@ impl Provider for GithubArgs {
             .unwrap_or("https://github.com");
         src.replace("api.", "").replace("repos/", "")
     }
-
 }

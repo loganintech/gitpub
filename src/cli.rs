@@ -26,15 +26,12 @@ pub enum Gitpo {
         raw(setting = "structopt::clap::AppSettings::ColoredHelp")
     )]
     BitBucket(BitbucketArgs),
-
-
 }
 
 // You're probably looking at this and thinking, logan, what are you doing.
 // Well, the idea here is to allow the possibility for more complicated provider options in the future.
 // We may not want every subcommand to be a provider
 impl Provider for Gitpo {
-
     fn payload(&self) -> String {
         match self {
             Gitpo::Github(config) => config.payload(),
