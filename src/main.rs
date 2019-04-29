@@ -29,13 +29,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 base64::encode(&format!("{}:{}", &config.username, &config.token))
             ),
         ),
+        Gitpo::Azure(config) => request.header("Bearer", config.token()),
     };
 
-    let result = request.send()?;
+    let result = dbg!(request.send()?);
     let status = result.status();
     let headers = result.headers();
     match status {
-        StatusCode::OK | StatusCode::CREATED => {
+        StatusCode::OK | StatusCode::CREATED | StatusCode::NON_AUTHORITATIVE_INFORMATION => {
             let apiloc = config.extract_url(&headers);
             println!("Repo created: {}", apiloc);
         }

@@ -1,7 +1,10 @@
 use super::Provider;
 use serde::Serialize;
 use serde_json::to_string;
+use std::io::{self, BufRead, Write};
+
 use structopt::StructOpt;
+use webbrowser;
 
 #[derive(Serialize, StructOpt)]
 struct GitRepoRef {
@@ -24,15 +27,15 @@ pub struct AzureArgs {
         long = "project",
         help = "The name or project id of the new repository."
     )]
-    project: Option<String>,
+    project: String,
     #[structopt(
         short = "t",
         long = "token",
-        help = "A personal access token. Alternatively read from AZURE_REPO_TOKEN env variable",
+        help = "A personal access token. Alternatively read from AZURE_REPO_TOKEN env variable. Will prompt you for authorization if unset.",
         env = "AZURE_REPO_TOKEN"
     )]
     #[serde(skip_serializing)]
-    pub token: String,
+    token: Option<String>,
     #[structopt(
         long = "source_ref",
         help = "Specify the source refs to use while creating a fork repo."
@@ -64,6 +67,36 @@ pub struct AzureArgs {
 const ENDPOINT: &str =
     "https://dev.azure.com/{organization}/{project}/_apis/git/repositories?api-version=5.0";
 
+const OAUTH_URL: &str = "https://app.vssps.visualstudio.com/oauth2/authorize?client_id=DA74590B-1524-4EA4-A52C-115FB2C0C9AE&response_type=Assertion&state=astate&scope=vso.code_manage&redirect_uri=https://gitpub.jewsofhazard.com/code/";
+
+impl AzureArgs {
+    pub fn token(&self) -> String {
+        if let Some(ref token) = self.token {
+            return token.to_string();
+        }
+
+        if webbrowser::open(OAUTH_URL).is_err() {
+            println!(
+                "Open this link in a browser to get your token: {}",
+                OAUTH_URL
+            );
+        }
+
+        print!("Paste your token: ");
+        std::io::stdout().flush().unwrap_or_else(|_| {});
+        let stdin = std::io::stdin();
+        let mut stdin = stdin.lock();
+        let mut buffer = "".to_string();
+
+        stdin
+            .read_line(&mut buffer)
+            .expect("Couldn't read from stdin.");
+        let buffer = buffer.trim();
+
+        buffer.to_string()
+    }
+}
+
 impl Provider for AzureArgs {
     fn payload(&self) -> String {
         to_string(&self).unwrap()
@@ -73,8 +106,8 @@ impl Provider for AzureArgs {
         if let Some(custom_endpoint) = &self.custom_endpoint {
             custom_endpoint.to_string()
         } else {
-            let project = if let Some(proj) = &self.project {
-                format!("/{}", proj)
+            let project = if &self.project != "" {
+                format!("/{}", &self.project)
             } else {
                 "".to_string()
             };

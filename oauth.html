@@ -1,0 +1,33 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gitpub Auth Token Site</title>
+    <script>
+        function replacetoken() {
+            let firstloc = window.location.href.indexOf("?code=") + 6;
+            let secondloc = window.location.href.indexOf("&state=");
+            let token = window.location.href.substr(firstloc, secondloc - firstloc);
+            document.getElementById("token").innerText = token
+        };
+
+        replacetoken();
+    </script>
+</head>
+
+<body onload="replacetoken();">
+
+    <h1>
+        <div id="token">
+            Please visit <a
+                href="https://app.vssps.visualstudio.com/oauth2/authorize?client_id=DA74590B-1524-4EA4-A52C-115FB2C0C9AE&response_type=Assertion&state=astate&scope=vso.code_manage&redirect_uri=https://gitpub.jewsofhazard.com/code/">auth
+                link.</a>
+        </div>
+    </h1>
+
+
+</body>
+
+</html>
