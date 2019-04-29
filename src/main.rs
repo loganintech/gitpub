@@ -36,7 +36,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let status = result.status();
     let headers = result.headers();
     match status {
-        StatusCode::OK | StatusCode::CREATED | StatusCode::NON_AUTHORITATIVE_INFORMATION => {
+        StatusCode::OK | StatusCode::CREATED => {
             let apiloc = config.extract_url(&headers);
             println!("Repo created: {}", apiloc);
         }
