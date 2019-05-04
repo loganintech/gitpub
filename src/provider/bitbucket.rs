@@ -101,4 +101,15 @@ impl Provider for BitbucketArgs {
     fn extract_url(&self, _: &reqwest::header::HeaderMap) -> String {
         format!("https://bitbucket.org/{}/{}", &self.username, &self.name)
     }
+
+    fn token(&self) -> String {
+        format!(
+            "Basic {}",
+            base64::encode(&format!("{}:{}", &self.username, &self.token))
+        )
+    }
+
+    fn auth_header(&self) -> &str {
+        "Authorization"
+    }
 }

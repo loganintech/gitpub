@@ -28,30 +28,13 @@ pub enum Gitpo {
     BitBucket(BitbucketArgs),
 }
 
-// You're probably looking at this and thinking, logan, what are you doing.
-// Well, the idea here is to allow the possibility for more complicated provider options in the future.
-// We may not want every subcommand to be a provider
-impl Provider for Gitpo {
-    fn payload(&self) -> String {
+// There's a time and a place for that sweet, sweet dynamic dispatch
+impl Gitpo {
+    pub fn as_provider(&self) -> &dyn Provider {
         match self {
-            Gitpo::Github(config) => config.payload(),
-            Gitpo::Gitlab(config) => config.payload(),
-            Gitpo::BitBucket(config) => config.payload(),
-        }
-    }
-
-    fn endpoint(&self) -> String {
-        match self {
-            Gitpo::Github(config) => config.endpoint(),
-            Gitpo::Gitlab(config) => config.endpoint(),
-            Gitpo::BitBucket(config) => config.endpoint(),
-        }
-    }
-    fn extract_url(&self, src: &reqwest::header::HeaderMap) -> String {
-        match self {
-            Gitpo::Github(config) => config.extract_url(src),
-            Gitpo::Gitlab(config) => config.extract_url(src),
-            Gitpo::BitBucket(config) => config.extract_url(src),
+            Gitpo::Github(x) => x as &Provider,
+            Gitpo::Gitlab(x) => x as &Provider,
+            Gitpo::BitBucket(x) => x as &Provider,
         }
     }
 }

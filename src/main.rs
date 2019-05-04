@@ -6,30 +6,16 @@ use structopt::StructOpt;
 mod cli;
 mod provider;
 
-use cli::Gitpo;
-use provider::Provider;
-
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let config = cli::Gitpo::from_args();
-
+    let config = config.as_provider();
     let client = reqwest::Client::new();
 
     let request = client
         .post(&config.endpoint())
         .body(config.payload())
-        .header("Content-Type", "application/json");
-
-    let request = match &config {
-        Gitpo::Github(config) => request.header("Authorization", format!("token {}", config.token)),
-        Gitpo::Gitlab(config) => request.header("Private-Token", config.token.to_string()),
-        Gitpo::BitBucket(config) => request.header(
-            "Authorization",
-            format!(
-                "Basic {}",
-                base64::encode(&format!("{}:{}", &config.username, &config.token))
-            ),
-        ),
-    };
+        .header("Content-Type", "application/json")
+        .header(config.auth_header(), config.token());
 
     let result = request.send()?;
     let status = result.status();

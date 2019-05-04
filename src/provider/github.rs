@@ -137,4 +137,12 @@ impl Provider for GithubArgs {
             .unwrap_or("https://github.com");
         src.replace("api.", "").replace("repos/", "")
     }
+
+    fn token(&self) -> String {
+        format!("token {}", self.token)
+    }
+
+    fn auth_header(&self) -> &str {
+        "Authorization"
+    }
 }

@@ -222,4 +222,12 @@ impl Provider for GitlabArgs {
             _ => "https://gitlab.com - Gitlab doesn't respond with your username or the URL to the created entity. But, it should be there. Alternatively set the GITLAB_USERNAME environment variable.".to_string(),
         }
     }
+
+    fn token(&self) -> String {
+        self.token.clone()
+    }
+
+    fn auth_header(&self) -> &str {
+        "Private-Token"
+    }
 }
