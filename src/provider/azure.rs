@@ -1,10 +1,13 @@
 use super::Provider;
+use reqwest::Client;
+
 use serde::Serialize;
 use serde_json::to_string;
-use std::io::{self, BufRead, Write};
+use std::io::{BufRead, Write};
 
 use structopt::StructOpt;
-use webbrowser;
+use azure_sdk_for_rust::cosmos::{AuthorizationToken, TokenType};
+
 
 #[derive(Serialize, StructOpt)]
 struct GitRepoRef {
@@ -32,10 +35,18 @@ pub struct AzureArgs {
         short = "t",
         long = "token",
         help = "A personal access token. Alternatively read from AZURE_REPO_TOKEN env variable. Will prompt you for authorization if unset.",
-        env = "AZURE_REPO_TOKEN"
+        env = "AZURE_REPO_TOKEN",
+        hide_env_values = true
     )]
     #[serde(skip_serializing)]
-    token: Option<String>,
+    azure_code_response: Option<String>,
+    #[structopt(
+        long = "secret",
+        help = "Azure app secret for your gitpub instance. Alternatively read from AZURE_CLIENT_SECRET env variable. Will prompt you for it if unset.",
+        env = "AZURE_CLIENT_SECRET",
+        hide_env_values = true
+    )]
+    azure_app_secret: Option<String>,
     #[structopt(
         long = "source_ref",
         help = "Specify the source refs to use while creating a fork repo."
@@ -67,33 +78,27 @@ pub struct AzureArgs {
 const ENDPOINT: &str =
     "https://dev.azure.com/{organization}/{project}/_apis/git/repositories?api-version=5.0";
 
-const OAUTH_URL: &str = "https://app.vssps.visualstudio.com/oauth2/authorize?client_id=DA74590B-1524-4EA4-A52C-115FB2C0C9AE&response_type=Assertion&state=astate&scope=vso.code_manage&redirect_uri=https://gitpub.jewsofhazard.com/code/";
+// const AZURE_SECRET: &str = include_str!("../../azure_secret.txt");
+// const OAUTH_URL: &str = "https://app.vssps.visualstudio.com/oauth2/authorize?client_id=DA74590B-1524-4EA4-A52C-115FB2C0C9AE&response_type=Assertion&state=astate&scope=vso.code_manage&redirect_uri=https://gitpub.jewsofhazard.com/code/";
+// const TOKEN_URL: &str = "https://app.vssps.visua
+// // let body = format!("client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer&client_assertion={}&grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion={}&redirect_uri={}", AZURE_SECRET, code, "https://gitpub.jewsofhazard.com/code/");
+
+
+
 
 impl AzureArgs {
-    pub fn token(&self) -> String {
-        if let Some(ref token) = self.token {
-            return token.to_string();
-        }
+    pub fn token(&self) -> Result<String, Box<dyn std::error::Error>> {
 
-        if webbrowser::open(OAUTH_URL).is_err() {
-            println!(
-                "Open this link in a browser to get your token: {}",
-                OAUTH_URL
-            );
-        }
+        let url = "https://dev.azure.com/";
+        let ctx = "https://login.microsoftonline.common";
 
-        print!("Paste your token: ");
-        std::io::stdout().flush().unwrap_or_else(|_| {});
-        let stdin = std::io::stdin();
-        let mut stdin = stdin.lock();
-        let mut buffer = "".to_string();
 
-        stdin
-            .read_line(&mut buffer)
-            .expect("Couldn't read from stdin.");
-        let buffer = buffer.trim();
 
-        buffer.to_string()
+
+
+
+
+        Ok("".to_owned())
     }
 }
 
@@ -124,7 +129,7 @@ impl Provider for AzureArgs {
         }
     }
 
-    fn extract_url(&self, headers: &reqwest::header::HeaderMap) -> String {
+    fn extract_url(&self, _: &reqwest::header::HeaderMap) -> String {
         unimplemented!()
     }
 }

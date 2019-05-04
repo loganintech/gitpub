@@ -29,7 +29,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 base64::encode(&format!("{}:{}", &config.username, &config.token))
             ),
         ),
-        Gitpo::Azure(config) => request.header("Bearer", config.token()),
+        Gitpo::Azure(config) => request.header(
+            "Bearer",
+            config.token().unwrap_or_else(|_| {
+                eprintln!("Error loading authentication information.");
+                std::process::exit(2);
+            }),
+        ),
     };
 
     let result = dbg!(request.send()?);
