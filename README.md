@@ -7,22 +7,26 @@ _Note:_ Environment variables can also be passed directly via CLI parameters, th
 Usage:
 
 ```
-Git Publish 0.3.0
+Git Publish 0.4.0
 Logan Saso <logansaso+tech@gmail.com>
 A small program to create remote git repositories from the command line.
 
 USAGE:
-    gitpub <SUBCOMMAND>
+    gitpub [OPTIONS] <SUBCOMMAND>
 
 FLAGS:
     -h, --help       Prints help information
     -V, --version    Prints version information
+
+OPTIONS:
+        --endpoint <endpoint>
 
 SUBCOMMANDS:
     bitbucket    Create a repo on bitbucket.
     github       Create a repo on github.
     gitlab       Create a repo on gitlab.
     help         Prints this message or the help of the given subcommand(s)
+
 ```
 
 ## Github Setup
@@ -34,38 +38,36 @@ _Note:_ If you want to create org repositories the token also requires `org` sco
 
 ### Github
 ```
-gitpub-github 0.3.0
-Logan Saso <logansaso+tech@gmail.com>
+gitpub-github 0.4.0
 Create a repo on github.
 
 USAGE:
-    gitpub github [OPTIONS] --name <name> --token <token>
+    gitpub github [FLAGS] [OPTIONS] --name <name> --token <token>
 
 FLAGS:
-    -h, --help       Prints help information
-    -V, --version    Prints version information
+    -i, --disable_issues            Disables issues for this repo. Defaults to false.
+        --merge                     Enables or disables merging with a merge commit. Defaults to false.
+        --disable_projects          Disables projects for this repo. Defaults to false.
+        --rebase                    Enables or disables rebase-merging for this repo. Defaults to false.
+        --squash                    Enables or disables squash-merging for this repo. Defaults to false.
+    -w, --disable_wiki              Disables wikis for this repo. Defaults to false.
+    -h, --help                      Prints help information
+        --org                       Creates the repo under an organization. Requires you have CREATE REPO permissions in
+                                    that org.
+    -p, --private                   Sets the repository to private. Required 'repo' scope on your personal access token.
+    -r, --initialize_with_readme    Creates an initial commit with empty README.md. Defaults to false.
+        --team                      ID of the team that has access to this repo. Only valid when using --org
+    -V, --version                   Prints version information
 
 OPTIONS:
-        --merge <allow_merge_commit>            Enables or disables merging with a merge commit. Defaults to true.
-        --rebase <allow_rebase_merge>           Enables or disables rebase-merging for this repo. Defaults to true.
-        --squash <allow_squash_merge>           Enables or disables squash-merging for this repo. Defaults to true.
-    -r, --initialize_with_readme <auto_init>    Creates an initial commit with empty README.md. Defaults to false.
-    -e, --endpoint <custom_endpoint>            Allows redirection of requests to enterprise providers.
-    -d, --description <description>             A short description of the repository.
-        --gitignore <gitignore_template>        Language template: ex 'Rust'. View more templates at
-                                                https://github.com/github/gitignore
-    -i, --issues <has_issues>                   Enable or disable issues for this repo. Defaults to true.
-        --projects <has_projects>               Enables or disables projects for this repo. Defaults to true.
-    -w, --wiki <has_wiki>                       Enables or disables wikis for this repo. Defaults to true.
-        --homepage <homepage>                   A URL with more information about the repository.
-        --license <license_template>            License template: ex 'mit' or 'mpl-2.0'. View more at
-                                                https://choosealicense.com/
-    -n, --name <name>                           The name of the new repository.
-        --org <org>                             Creates the repo under an organization. Requires you have CREATE REPO
-                                                permissions in that org.
-    -p, --private <private>                     Requires 'repo' scope on your personal access token
-        --team <team_id>                        Id of the team that has access to this repo. Only valid when using --org.
-    -t, --token <token>                         A personal access token. Alternatively read from GITHUB_REPO_TOKEN env variable [env: GITHUB_REPO_TOKEN=<YOUR_TOKEN>]
+    -d, --description <description>    A short description of the repository.
+        --gitignore <gitignore>        Language template: ex 'Rust'. View more templates at
+                                       https://github.com/github/gitignore/
+        --homepage <homepage>          A URL with more information about the repository.
+        --license <license>            License template: ex 'mit' or 'mpl-2.0'. View more at https://choosealicense.com/
+    -n, --name <name>                  The name of the new repository.
+    -t, --token <token>                A personal access token. Alternatively read from GITHUB_REPO_TOKEN env variable. [env: GITHUB_REPO_TOKEN=<YOUR_TOKEN>]
+
 ```
 
 ## Gitlab Setup
@@ -78,111 +80,58 @@ _Note_: Optionally set the `GITLAB_USERNAME` environment variable to enable prin
 
 ### Gitlab
 ```
-gitpub-gitlab 0.3.0
-Logan Saso <logansaso+tech@gmail.com>
+gitpub-gitlab 0.4.0
 Create a repo on gitlab.
 
 USAGE:
-    gitpub gitlab [OPTIONS] --name <name> --path <path> --token <token>
+    gitpub gitlab [FLAGS] [OPTIONS] --name <name> --path <path> --token <token>
 
 FLAGS:
-    -h, --help
-            Prints help information
-
-    -V, --version
-            Prints version information
-
+        --disable_container_registry        Disables container registry for this repo.
+    -i, --disable_issues                    Disables issues for this repo.
+        --disable_jobs                      Disables jobs for this repo.
+        --disable_merge                     Disables merging with a merge commit.
+        --disable_shared_runners            Disables shared runners for this repo.
+        --disable_snippets                  Disables snippets for this repo.
+    -w, --disable_wiki                      Disables wikis for this repo.
+        --discussion_resolution_required    Requires discussions are resolved before a merge.
+    -h, --help                              Prints help information
+    -r, --initialize_with_readme            Create a blank README for the project.
+        --large_file_support                Enables git large file support.
+        --merge_request_link_on_commit      Print the merge request link when committing to the repository.
+        --mirror                            Enables pull mirroring in a project.
+        --mirror_triggers_builds            Enables builds on pull mirroring.
+        --pipeline_success_required         Requires pipelines to succeed before a merge.
+        --public_builds                     Lets jobs be viewed by non-project members.
+        --request_access_enabled            Allow users to request member access.
+    -V, --version                           Prints version information
 
 OPTIONS:
-        --approvals_before_merge <approvals_before_merge>
-            Number of approvals required before a merge.
-
-        --ci_config_path <ci_config_path>
-            Path to CI config file.
-
-        --container_registry <container_registry_enabled>
-            Enables or disables container registry for this repo.
-
-        --default_branch <default_branch>
-            Set default branch. Defaults to master.
-
-    -e, --endpoint <custom_endpoint>
-            Allows redirection of requests to enterprise providers.
-
-    -d, --description <description>
-            A short description of the repository.
-
-        --import_url <import_url>
-            Supply a URL to import a repo from.
-
-    -r, --initialize_with_readme <initialize_with_readme>
-            Create a blank README in the project.
-
-    -i, --issues <issues_enabled>
-            Enable or disable issues for this repo. Defaults to true.
-
-        --jobs <jobs_enabled>
-            Enables or disables jobs for this repo.
-
-        --lfs <lfs_enabled>
-            Enables git large file support.
-
+        --approvals_before_merge <approvals_before_merge>    Number of approvals required before a merge.
+        --ci_config_path <ci_config_path>                    Path to CI config file.
+        --default_branch <default_branch>                    Set default branch. Defaults to master.
+    -d, --description <description>                          A short description of the repository.
+        --import_url <import_url>                            Supply a URL to import a repo from.
         --merge_method <merge_method>
-            Sets the merge method.
+            Sets the merge method. [possible values: merge, rebase_merge, ff]
 
-        --merge <merge_requests_enabled>
-            Enables or disables merge requests. Defaults to true.
-
-        --mirror <mirror>
-            Enables pull mirroring in a project.
-
-        --mirror_trigger_builds <mirror_trigger_builds>
-            Enables builds on pull mirroring.
-
-    -n, --name <name>
-            The name of the new project. Equals path if not provided.
-
+    -n, --name <name>                                        The name of the new repository.
         --namespace_id <namespace_id>
             Namespace for the new project (defaults to the current user’s namespace)
 
-        --discussion_resolution_required <only_allow_merge_if_all_discussions_are_resolved>
-            Requires discussions are resolved before a merge.
-
-        --pipeline_success_required <only_allow_merge_if_pipeline_succeeds>
-            Requires pipelines to succeed before a merge.
-
         --path <path>
-            Repository name for new project. Generated based on name if not provided (generated lowercased with dashes).
-
-        --merge_request_link_on_commit <printing_merge_request_link_enabled>
-            Print the merge request link when committing to the repository.
-
-        --public_builds <public_builds>
-            Lets jobs be viewed by non-project members.
+            The path for the new repo. Generated based on name if not provided (generated lowercased with dashes).
 
         --repository_storage <repository_storage>
-            Which storage shard the repo is one. Available only to admins.
-
-        --request_access_enabled <request_access_enabled>
-            Allow users to request member access.
-
-        --shared_runners <shared_runners_enabled>
-            Enables or disables shared runners for this repo.
-
-        --snippets <snippets_enabled>
-            Enables or disables snippets for this repo.
+            An advanced parameter to designate which shard the repo is on, available only to admins.
 
         --tag_list <tag_list>...
-            A list of tags for a repo.
+            A list of tags for a repo. Takes up to four params. `--tag_list first second third tag`
 
     -t, --token <token>
-            A personal access token. Alternatively read from GITLAB_REPO_TOKEN env variable [env: GITLAB_REPO_TOKEN=<YOUR_TOKEN>]
-
-    -p, --visibility <visibility>
-            The visibility of the project. [possible values: public, internal, private]
-
-    -w, --wiki <wiki_enabled>
-            Enables or disables wikis for this repo. Defaults to true.
+            A personal access token. Alternatively read from GITLAB_REPO_TOKEN env variable. [env: GITLAB_REPO_TOKEN=<YOUR_TOKEN>]
+        --visibility <visibility>
+            The visibility of the project [possible values: public, internal, private]
 ```
 
 ## BitBucket Setup
@@ -194,28 +143,27 @@ OPTIONS:
 ### Bitbucket
 
 ```
-gitpub-bitbucket 0.3.0
-Logan Saso <logansaso+tech@gmail.com>
+gitpub-bitbucket 0.4.0
 Create a repo on bitbucket.
 
 USAGE:
-    gitpub bitbucket [OPTIONS] --name <name> --token <token> --username <username>
+    gitpub bitbucket [FLAGS] [OPTIONS] --name <name> --token <token> --username <username>
 
 FLAGS:
-    -h, --help       Prints help information
-    -V, --version    Prints version information
+    -i, --disable_issues    Disables issues for this repo. Defaults to false.
+    -w, --disable_wiki      Disables wikis for this repo. Defaults to false.
+    -h, --help              Prints help information
+        --language          Give bitbucket a hint about the programming language.
+    -p, --private           Sets the repository to private.
+    -V, --version           Prints version information
 
 OPTIONS:
-    -e, --endpoint <custom_endpoint>    Allows redirection of requests to enterprise providers.
-    -d, --description <description>     A short description of the repository.
-        --fork_policy <fork_policy>     Allow public forking of this repo. [possible values: allow_forks, no_public_forks, no_forks]
-    -i, --issues <has_issues>           Enable or disable issues for this repo. Defaults to true.
-    -w, --wiki <has_wiki>               Enables or disables wikis for this repo. Defaults to true.
-    -p, --private <is_private>          Sets whether or not the repository is private.
-        --language <language>           Give bitbucket a hint about the programming language.
-    -n, --name <name>                   The name of the new repository.
-        --scm <scm>                     Control the underlying source control method. [possible values: hg, git]
-    -t, --token <token>                 A personal access token. Alternatively read from BITBUCKET_REPO_TOKEN env variable [env: BITBUCKET_REPO_TOKEN=<YOUR_APP_PASSWORD>]
-        --username <username>           Your bitbucket username. Alternatively read from BITBUCKET_USERNAME env variable [env: BITBUCKET_USERNAME=<YOUR_USERNAME>]
-        --homepage <website>            A URL with more information about the repository.
+    -d, --description <description>    A short description of the repository.
+    -e, --endpoint <endpoint>          Allows redirection of requests to enterprise providers.
+        --fork_policy <fork_policy>    Changes the allowed forking method for this repo. [possible values: allow_forks,
+                                       no_public_forks, no_forks]
+    -n, --name <name>                  The name of the new repository.
+        --scm <scm>                    Control underlying source control method. [possible values: git, hg]
+    -t, --token <token>                A personal access token. Alternatively read from BITBUCKET_REPO_TOKEN env variable. [env: BITBUCKET_REPO_TOKEN=<YOUR_TOKEN>]
+        --username <username>          Your bitbucket username. Alternatively read from BITBUCKET_USERNAME env variable. [env: BITBUCKET_USERNAME=<YOUR_USERNAME>]
 ```

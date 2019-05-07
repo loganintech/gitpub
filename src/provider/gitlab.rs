@@ -91,6 +91,7 @@ impl<'a> Provider for GitlabArgs<'a> {
 
 pub fn subcommand() -> App<'static, 'static> {
     SubCommand::with_name("gitlab")
+        .version("0.4.0")
         .about("Create a repo on gitlab.")
         .arg(
             Arg::with_name("name")
@@ -208,7 +209,7 @@ pub fn subcommand() -> App<'static, 'static> {
                 .takes_value(true)
                 .multiple(true)
                 .max_values(4)
-                .help("A list of tags for a repo.")
+                .help("A list of tags for a repo. Takes up to four params. `--tag_list first second third tag`")
         )
         .arg(
             Arg::with_name("merge_request_link_on_commit")
