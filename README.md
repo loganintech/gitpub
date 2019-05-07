@@ -52,8 +52,7 @@ FLAGS:
         --squash                    Enables or disables squash-merging for this repo. Defaults to false.
     -w, --disable_wiki              Disables wikis for this repo. Defaults to false.
     -h, --help                      Prints help information
-        --org                       Creates the repo under an organization. Requires you have CREATE REPO permissions in
-                                    that org.
+        --org                       Creates the repo under an organization. Requires you have CREATE REPO permissions in that org.
     -p, --private                   Sets the repository to private. Required 'repo' scope on your personal access token.
     -r, --initialize_with_readme    Creates an initial commit with empty README.md. Defaults to false.
         --team                      ID of the team that has access to this repo. Only valid when using --org
@@ -61,8 +60,7 @@ FLAGS:
 
 OPTIONS:
     -d, --description <description>    A short description of the repository.
-        --gitignore <gitignore>        Language template: ex 'Rust'. View more templates at
-                                       https://github.com/github/gitignore/
+        --gitignore <gitignore>        Language template: ex 'Rust'. View more templates at https://github.com/github/gitignore/
         --homepage <homepage>          A URL with more information about the repository.
         --license <license>            License template: ex 'mit' or 'mpl-2.0'. View more at https://choosealicense.com/
     -n, --name <name>                  The name of the new repository.
@@ -112,26 +110,14 @@ OPTIONS:
         --default_branch <default_branch>                    Set default branch. Defaults to master.
     -d, --description <description>                          A short description of the repository.
         --import_url <import_url>                            Supply a URL to import a repo from.
-        --merge_method <merge_method>
-            Sets the merge method. [possible values: merge, rebase_merge, ff]
-
+        --merge_method <merge_method>                        Sets the merge method. [possible values: merge, rebase_merge, ff]
     -n, --name <name>                                        The name of the new repository.
-        --namespace_id <namespace_id>
-            Namespace for the new project (defaults to the current user’s namespace)
-
-        --path <path>
-            The path for the new repo. Generated based on name if not provided (generated lowercased with dashes).
-
-        --repository_storage <repository_storage>
-            An advanced parameter to designate which shard the repo is on, available only to admins.
-
-        --tag_list <tag_list>...
-            A list of tags for a repo. Takes up to four params. `--tag_list first second third tag`
-
-    -t, --token <token>
-            A personal access token. Alternatively read from GITLAB_REPO_TOKEN env variable. [env: GITLAB_REPO_TOKEN=<YOUR_TOKEN>]
-        --visibility <visibility>
-            The visibility of the project [possible values: public, internal, private]
+        --namespace_id <namespace_id>                        Namespace for the new project (defaults to the current user’s namespace)
+        --path <path>                                        The path for the new repo. Generated based on name if not provided (generated lowercased with dashes).
+        --repository_storage <repository_storage>            An advanced parameter to designate which shard the repo is on, available only to admins.
+        --tag_list <tag_list>...                             A list of tags for a repo. Takes up to four params. `--tag_list first second third tag`
+    -t, --token <token>                                      A personal access token. Alternatively read from GITLAB_REPO_TOKEN env variable. [env: GITLAB_REPO_TOKEN=<YOUR_TOKEN>]
+        --visibility <visibility>                            The visibility of the project [possible values: public, internal, private]
 ```
 
 ## BitBucket Setup
@@ -160,8 +146,7 @@ FLAGS:
 OPTIONS:
     -d, --description <description>    A short description of the repository.
     -e, --endpoint <endpoint>          Allows redirection of requests to enterprise providers.
-        --fork_policy <fork_policy>    Changes the allowed forking method for this repo. [possible values: allow_forks,
-                                       no_public_forks, no_forks]
+        --fork_policy <fork_policy>    Changes the allowed forking method for this repo. [possible values: allow_forks, no_public_forks, no_forks]
     -n, --name <name>                  The name of the new repository.
         --scm <scm>                    Control underlying source control method. [possible values: git, hg]
     -t, --token <token>                A personal access token. Alternatively read from BITBUCKET_REPO_TOKEN env variable. [env: BITBUCKET_REPO_TOKEN=<YOUR_TOKEN>]
