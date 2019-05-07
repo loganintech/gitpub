@@ -1,21 +1,24 @@
-use std::process::exit;
-
+use cli::Gitpo;
 use reqwest::StatusCode;
-use structopt::StructOpt;
-
+use std::process::exit;
 mod cli;
 mod provider;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let config = cli::Gitpo::from_args();
+    let matches = cli::get_app().get_matches();
+    let config = Gitpo::from_matches(&matches);
     let config = config.as_provider();
     let client = reqwest::Client::new();
-
+    let endpoint = if let Some(e) = matches.value_of("endpoint") {
+        e.to_string()
+    } else {
+        config.endpoint()
+    };
     let request = client
-        .post(&config.endpoint())
+        .post(&endpoint)
         .body(config.payload())
         .header("Content-Type", "application/json")
-        .header(config.auth_header(), config.token());
+        .header(config.auth_header().as_bytes(), config.token());
 
     let result = request.send()?;
     let status = result.status();

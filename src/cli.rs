@@ -1,35 +1,33 @@
-use crate::provider::{bitbucket::BitbucketArgs, github::GithubArgs, gitlab::GitlabArgs, Provider};
-use structopt::StructOpt;
+use crate::provider::{
+    bitbucket::{self, BitbucketArgs},
+    github::{self, GithubArgs},
+    gitlab::{self, GitlabArgs},
+    Provider,
+};
+use clap::{App, AppSettings, Arg, ArgMatches};
 
-#[derive(StructOpt)]
-#[structopt(
-    name = "Git Publish",
-    about = "A small program to create remote git repositories from the command line.",
-    raw(setting = "structopt::clap::AppSettings::ColoredHelp")
-)]
-pub enum Gitpo {
-    #[structopt(
-        name = "github",
-        about = "Create a repo on github.",
-        raw(setting = "structopt::clap::AppSettings::ColoredHelp")
-    )]
-    Github(GithubArgs),
-    #[structopt(
-        name = "gitlab",
-        about = "Create a repo on gitlab.",
-        raw(setting = "structopt::clap::AppSettings::ColoredHelp")
-    )]
-    Gitlab(GitlabArgs),
-    #[structopt(
-        name = "bitbucket",
-        about = "Create a repo on bitbucket.",
-        raw(setting = "structopt::clap::AppSettings::ColoredHelp")
-    )]
-    BitBucket(BitbucketArgs),
+pub enum Gitpo<'a> {
+    Github(GithubArgs<'a>),
+    Gitlab(GitlabArgs<'a>),
+    BitBucket(BitbucketArgs<'a>),
 }
 
-// There's a time and a place for that sweet, sweet dynamic dispatch
-impl Gitpo {
+impl<'a> Gitpo<'a> {
+    pub fn from_matches(matches: &'a ArgMatches) -> Gitpo<'a> {
+        match matches.subcommand_name() {
+            Some("github") => Gitpo::Github(github::from_matches(
+                &matches.subcommand_matches("github").unwrap(),
+            )),
+            Some("gitlab") => Gitpo::Gitlab(gitlab::from_matches(
+                &matches.subcommand_matches("gitlab").unwrap(),
+            )),
+            Some("bitbucket") => Gitpo::BitBucket(bitbucket::from_matches(
+                &matches.subcommand_matches("bitbucket").unwrap(),
+            )),
+            _ => unreachable!(),
+        }
+    }
+
     pub fn as_provider(&self) -> &dyn Provider {
         match self {
             Gitpo::Github(x) => x as &Provider,
@@ -37,4 +35,22 @@ impl Gitpo {
             Gitpo::BitBucket(x) => x as &Provider,
         }
     }
+}
+
+pub fn get_app() -> App<'static, 'static> {
+    App::new("Git Publish")
+        .global_setting(AppSettings::ColorAuto)
+        .setting(AppSettings::SubcommandRequiredElseHelp)
+        .bin_name("gitpub")
+        .author("Logan Saso <logansaso+tech@gmail.com>")
+        .about("A small program to create remote git repositories from the command line.")
+        .version(env!("CARGO_PKG_VERSION"))
+        .arg(
+            Arg::with_name("endpoint")
+                .long("endpoint")
+                .takes_value(true),
+        )
+        .subcommand(github::subcommand())
+        .subcommand(gitlab::subcommand())
+        .subcommand(bitbucket::subcommand())
 }

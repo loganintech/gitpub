@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0] - 2019-05-07
+### Changed
+
+* This version encompasses changes to the CLI interface. It was re-written from structopt to use a clap app.
+* Any flag that defaults to true and accepted a `true` or `false` value has now been inverted. IE `--issues false` has become `--disable_issues`. `--issues true` is no longer accept as it doesn't effect the result.
+* The `--endpoint` flag is now global and allows you to selectively override the endpoint that the request is sent to.
+
 ## [0.3.0] - 2019-04-22
 ### Added
 
