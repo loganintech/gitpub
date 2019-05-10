@@ -1,7 +1,7 @@
 use std::env::current_dir;
 use std::process::Command;
 
-pub fn add_remote_origin(name: &str, url: &str) -> bool {
+pub fn add_remote(name: &str, url: &str) -> bool {
     match (current_dir(), can_create_remote(name)) {
         (Ok(dir), true) if dir.ancestors().any(|p| p.join(".git").exists()) => Command::new("git")
             .arg("remote")

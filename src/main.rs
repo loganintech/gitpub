@@ -7,7 +7,7 @@ mod cli;
 mod git;
 mod provider;
 
-use git::add_remote_origin;
+use git::add_remote;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let matches = cli::get_app().get_matches();
@@ -35,7 +35,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let remote_name = matches
                 .value_of("remote_name")
                 .expect("This should default to origin, so something is wrong.");
-            if matches.is_present("set_remote") && !add_remote_origin(remote_name, &apiloc) {
+            if matches.is_present("set_remote") && !add_remote(remote_name, &apiloc) {
                 eprintln!("Couldn't set remote.");
             }
         }
