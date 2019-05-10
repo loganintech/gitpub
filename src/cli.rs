@@ -1,57 +1,56 @@
-use crate::provider::{bitbucket::BitbucketArgs, github::GithubArgs, gitlab::GitlabArgs, Provider};
-use structopt::StructOpt;
+use crate::provider::{
+    bitbucket::{self, BitbucketArgs},
+    github::{self, GithubArgs},
+    gitlab::{self, GitlabArgs},
+    Provider,
+};
+use clap::{App, AppSettings, Arg, ArgMatches};
 
-#[derive(StructOpt)]
-#[structopt(
-    name = "Git Publish",
-    about = "A small program to create remote git repositories from the command line.",
-    raw(setting = "structopt::clap::AppSettings::ColoredHelp")
-)]
-pub enum Gitpo {
-    #[structopt(
-        name = "github",
-        about = "Create a repo on github.",
-        raw(setting = "structopt::clap::AppSettings::ColoredHelp")
-    )]
-    Github(GithubArgs),
-    #[structopt(
-        name = "gitlab",
-        about = "Create a repo on gitlab.",
-        raw(setting = "structopt::clap::AppSettings::ColoredHelp")
-    )]
-    Gitlab(GitlabArgs),
-    #[structopt(
-        name = "bitbucket",
-        about = "Create a repo on bitbucket.",
-        raw(setting = "structopt::clap::AppSettings::ColoredHelp")
-    )]
-    BitBucket(BitbucketArgs),
+pub enum Gitpo<'a> {
+    Github(GithubArgs<'a>),
+    Gitlab(GitlabArgs<'a>),
+    BitBucket(BitbucketArgs<'a>),
 }
 
-// You're probably looking at this and thinking, logan, what are you doing.
-// Well, the idea here is to allow the possibility for more complicated provider options in the future.
-// We may not want every subcommand to be a provider
-impl Provider for Gitpo {
-    fn payload(&self) -> String {
-        match self {
-            Gitpo::Github(config) => config.payload(),
-            Gitpo::Gitlab(config) => config.payload(),
-            Gitpo::BitBucket(config) => config.payload(),
+impl<'a> Gitpo<'a> {
+    pub fn from_matches(matches: &'a ArgMatches) -> Gitpo<'a> {
+        match matches.subcommand_name() {
+            Some("github") => Gitpo::Github(github::from_matches(
+                &matches.subcommand_matches("github").unwrap(),
+            )),
+            Some("gitlab") => Gitpo::Gitlab(gitlab::from_matches(
+                &matches.subcommand_matches("gitlab").unwrap(),
+            )),
+            Some("bitbucket") => Gitpo::BitBucket(bitbucket::from_matches(
+                &matches.subcommand_matches("bitbucket").unwrap(),
+            )),
+            _ => unreachable!(),
         }
     }
 
-    fn endpoint(&self) -> String {
+    pub fn as_provider(&self) -> &dyn Provider {
         match self {
-            Gitpo::Github(config) => config.endpoint(),
-            Gitpo::Gitlab(config) => config.endpoint(),
-            Gitpo::BitBucket(config) => config.endpoint(),
+            Gitpo::Github(x) => x as &Provider,
+            Gitpo::Gitlab(x) => x as &Provider,
+            Gitpo::BitBucket(x) => x as &Provider,
         }
     }
-    fn extract_url(&self, src: &reqwest::header::HeaderMap) -> String {
-        match self {
-            Gitpo::Github(config) => config.extract_url(src),
-            Gitpo::Gitlab(config) => config.extract_url(src),
-            Gitpo::BitBucket(config) => config.extract_url(src),
-        }
-    }
+}
+
+pub fn get_app() -> App<'static, 'static> {
+    App::new("Git Publish")
+        .global_setting(AppSettings::ColorAuto)
+        .setting(AppSettings::SubcommandRequiredElseHelp)
+        .bin_name("gitpub")
+        .author("Logan Saso <logansaso+tech@gmail.com>")
+        .about("A small program to create remote git repositories from the command line.")
+        .version(env!("CARGO_PKG_VERSION"))
+        .arg(
+            Arg::with_name("endpoint")
+                .long("endpoint")
+                .takes_value(true),
+        )
+        .subcommand(github::subcommand())
+        .subcommand(gitlab::subcommand())
+        .subcommand(bitbucket::subcommand())
 }

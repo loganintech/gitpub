@@ -1,11 +1,10 @@
-use std::process::exit;
-
+use cli::Gitpo;
 use reqwest::StatusCode;
-use structopt::StructOpt;
-
+use std::process::exit;
 mod cli;
 mod git;
 mod provider;
+
 
 use cli::Gitpo;
 use git::Git;
@@ -14,22 +13,23 @@ use provider::Provider;
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let config = cli::Gitpo::from_args();
     let client = reqwest::Client::new();
-    let request = client
-        .post(&config.endpoint())
-        .body(config.payload())
-        .header("Content-Type", "application/json");
 
-    let request = match &config {
-        Gitpo::Github(config) => request.header("Authorization", format!("token {}", config.token)),
-        Gitpo::Gitlab(config) => request.header("Private-Token", config.token.to_string()),
-        Gitpo::BitBucket(config) => request.header(
-            "Authorization",
-            format!(
-                "Basic {}",
-                base64::encode(&format!("{}:{}", &config.username, &config.token))
-            ),
-        ),
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let matches = cli::get_app().get_matches();
+    let config = Gitpo::from_matches(&matches);
+    let config = config.as_provider();
+    let client = reqwest::Client::new();
+    let endpoint = if let Some(e) = matches.value_of("endpoint") {
+        e.to_string()
+    } else {
+        config.endpoint()
     };
+  
+    let request = client
+        .post(&endpoint)
+        .body(config.payload())
+        .header("Content-Type", "application/json")
+        .header(config.auth_header().as_bytes(), config.token());
 
     let result = request.send()?;
     let status = result.status();
