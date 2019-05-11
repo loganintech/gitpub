@@ -31,11 +31,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     match status {
         StatusCode::OK | StatusCode::CREATED => {
             let apiloc = config.extract_url(&headers);
+            let (remote_url, can_use_ssh) = match (
+                config.ssh_url(&headers),
+                matches.is_present("ssh_remote_format"),
+            ) {
+                (Some(url), true) => (url, true),
+                _ => (config.extract_url(&headers), false),
+            };
             println!("Repo created: {}", apiloc);
             let remote_name = matches
                 .value_of("remote_name")
                 .expect("This should default to origin, so something is wrong.");
-            if matches.is_present("set_remote") && !add_remote(remote_name, &apiloc) {
+            if matches.is_present("set_remote")
+                && ((matches.is_present("ssh_remote_format") && can_use_ssh) || !can_use_ssh)
+                && !add_remote(remote_name, &remote_url)
+            {
                 eprintln!("Couldn't set remote.");
             }
         }

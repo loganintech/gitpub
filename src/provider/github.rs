@@ -60,6 +60,20 @@ impl<'a> Provider for GithubArgs<'a> {
     fn auth_header(&self) -> String {
         "Authorization".to_string()
     }
+
+    fn ssh_url(&self, headers: &reqwest::header::HeaderMap) -> Option<String> {
+        headers
+            .get("location")
+            .and_then(|x| x.to_str().ok())
+            .map(|src| {
+                Some({
+                    let mut res = src.replace("https://api.github.com/repos/", "git@github.com:");
+                    res.push_str(".git");
+                    res
+                })
+            })
+            .unwrap_or(None)
+    }
 }
 
 pub fn subcommand() -> App<'static, 'static> {

@@ -49,6 +49,10 @@ impl<'a> Provider for BitbucketArgs<'a> {
     fn auth_header(&self) -> String {
         "Authorization".to_string()
     }
+
+    fn ssh_url(&self, _: &reqwest::header::HeaderMap) -> Option<String> {
+        Some(format!("git@bitbucket.com:{}/{}.git", &self.username, &self.name))
+    }
 }
 
 pub fn subcommand() -> App<'static, 'static> {

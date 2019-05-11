@@ -64,5 +64,9 @@ pub fn get_app() -> App<'static, 'static> {
                 .help("Designates a custom name for setting remote. Defaults to origin.")
                 .default_value("origin")
                 .hide_default_value(true)
+        ).arg(
+            Arg::with_name("ssh_remote_format")
+                .long("ssh_remote_format")
+                .help("Attempts to convert the return url into ssh format. If it fails (the provider doesn't support ssh format), origin is unset.")
         )
 }
