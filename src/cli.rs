@@ -57,7 +57,7 @@ pub fn get_app() -> App<'static, 'static> {
         .arg(
             Arg::with_name("set_remote")
                 .long("set_remote")
-                .help("Sets remote. Defaults to origin.")
+                .help("Sets the remote of the local dir after successful creation.")
         ).arg(
             Arg::with_name("remote_name")
                 .long("remote_name")
@@ -67,6 +67,6 @@ pub fn get_app() -> App<'static, 'static> {
         ).arg(
             Arg::with_name("ssh_remote_format")
                 .long("ssh_remote_format")
-                .help("Attempts to convert the return url into ssh format. If it fails (the provider doesn't support ssh format), origin is unset.")
+                .help("Attempts to convert the git remote url into ssh format. If it fails (the provider doesn't support ssh format), the remote isn't set.")
         )
 }
