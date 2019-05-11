@@ -51,7 +51,10 @@ impl<'a> Provider for BitbucketArgs<'a> {
     }
 
     fn ssh_url(&self, _: &reqwest::header::HeaderMap) -> Option<String> {
-        Some(format!("git@bitbucket.com:{}/{}.git", &self.username, &self.name))
+        Some(format!(
+            "git@bitbucket.com:{}/{}.git",
+            &self.username, &self.name
+        ))
     }
 }
 
