@@ -147,7 +147,6 @@ FLAGS:
 
 OPTIONS:
     -d, --description <description>    A short description of the repository.
-    -e, --endpoint <endpoint>          Allows redirection of requests to enterprise providers.
         --fork_policy <fork_policy>    Changes the allowed forking method for this repo. [possible values: allow_forks, no_public_forks, no_forks]
     -n, --name <name>                  The name of the new repository.
         --scm <scm>                    Control underlying source control method. [possible values: git, hg]

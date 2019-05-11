@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.1] - 2019-05-11
+### Removed
+
+* Removed `--endpoint` from gitlab subcommand. It is taken care of via a global param now.
+
 ## [0.4.0] - 2019-05-11
 ### Added
 * Added `--ssh_remote_format`, `--set_remote`, and `--remote_name` commands. These are global commands and must be used before the subcommand. Example: `gitpub --ssh_remote_format github -n "name"` Check README for more info.
