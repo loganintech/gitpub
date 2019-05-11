@@ -2,16 +2,21 @@ use std::env::current_dir;
 use std::process::Command;
 
 pub fn add_remote(name: &str, url: &str) -> bool {
-    match (current_dir(), can_create_remote(name)) {
-        (Ok(dir), true) if dir.ancestors().any(|p| p.join(".git").exists()) => Command::new("git")
-            .arg("remote")
-            .arg("add")
-            .arg(name)
-            .arg(url)
-            .output()
-            .is_ok(),
-        _ => false,
+    if can_create_remote(name) {
+        if let Ok(dir) = current_dir() {
+            if dir.ancestors().any(|p| p.join(".git").exists()) {
+                return Command::new("git")
+                    .arg("remote")
+                    .arg("add")
+                    .arg(name)
+                    .arg(url)
+                    .output()
+                    .is_ok();
+            }
+        }
     }
+
+    false
 }
 
 fn can_create_remote(name: &str) -> bool {

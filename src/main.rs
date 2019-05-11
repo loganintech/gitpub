@@ -1,5 +1,3 @@
-#![feature(bind_by_move_pattern_guards)]
-
 use cli::Gitpo;
 use reqwest::StatusCode;
 use std::process::exit;
