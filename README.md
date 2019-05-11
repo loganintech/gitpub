@@ -12,21 +12,23 @@ Logan Saso <logansaso+tech@gmail.com>
 A small program to create remote git repositories from the command line.
 
 USAGE:
-    gitpub [OPTIONS] <SUBCOMMAND>
+    gitpub [FLAGS] [OPTIONS] <SUBCOMMAND>
 
 FLAGS:
-    -h, --help       Prints help information
-    -V, --version    Prints version information
+    -h, --help                 Prints help information
+        --set_remote           Sets the remote of the local dir after successful creation.
+        --ssh_remote_format    Attempts to convert the git remote url into ssh format. If it fails (the provider doesn't support ssh format), the remote isn't set.
+    -V, --version              Prints version information
 
 OPTIONS:
-        --endpoint <endpoint>
+        --endpoint <endpoint>          Sets a custom endpoint to POST to, useful if you want a private instance and know the api matches one gitpub supports.
+        --remote_name <remote_name>    Designates a custom name for setting remote. Defaults to origin.
 
 SUBCOMMANDS:
     bitbucket    Create a repo on bitbucket.
     github       Create a repo on github.
     gitlab       Create a repo on gitlab.
     help         Prints this message or the help of the given subcommand(s)
-
 ```
 
 ## Github Setup
