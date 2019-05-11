@@ -98,7 +98,7 @@ impl<'a> Provider for GitlabArgs<'a> {
 
 pub fn subcommand() -> App<'static, 'static> {
     SubCommand::with_name("gitlab")
-        .version("0.4.0")
+        .version(env!("CARGO_PKG_VERSION"))
         .about("Create a repo on gitlab.")
         .arg(
             Arg::with_name("name")

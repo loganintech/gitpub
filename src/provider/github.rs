@@ -78,7 +78,7 @@ impl<'a> Provider for GithubArgs<'a> {
 
 pub fn subcommand() -> App<'static, 'static> {
     SubCommand::with_name("github")
-        .version("0.4.0")
+        .version(env!("CARGO_PKG_VERSION"))
         .about("Create a repo on github.")
         .arg(
             Arg::with_name("name")

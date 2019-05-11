@@ -7,7 +7,7 @@ _Note:_ Environment variables can also be passed directly via CLI parameters, th
 Usage:
 
 ```
-Git Publish 0.4.0
+Git Publish 0.4.1
 Logan Saso <logansaso+tech@gmail.com>
 A small program to create remote git repositories from the command line.
 
@@ -40,7 +40,7 @@ _Note:_ If you want to create org repositories the token also requires `org` sco
 
 ### Github
 ```
-gitpub-github 0.4.0
+gitpub-github 0.4.1
 Create a repo on github.
 
 USAGE:
@@ -80,7 +80,7 @@ _Note_: Optionally set the `GITLAB_USERNAME` environment variable to enable prin
 
 ### Gitlab
 ```
-gitpub-gitlab 0.4.0
+gitpub-gitlab 0.4.1
 Create a repo on gitlab.
 
 USAGE:
@@ -131,7 +131,7 @@ OPTIONS:
 ### Bitbucket
 
 ```
-gitpub-bitbucket 0.4.0
+gitpub-bitbucket 0.4.1
 Create a repo on bitbucket.
 
 USAGE:

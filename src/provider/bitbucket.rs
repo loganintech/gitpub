@@ -60,7 +60,7 @@ impl<'a> Provider for BitbucketArgs<'a> {
 
 pub fn subcommand() -> App<'static, 'static> {
     SubCommand::with_name("bitbucket")
-        .version("0.4.0")
+        .version(env!("CARGO_PKG_VERSION"))
         .about("Create a repo on bitbucket.")
         .arg(
             Arg::with_name("name")
