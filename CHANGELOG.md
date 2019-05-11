@@ -3,7 +3,7 @@
 ## [0.4.1] - 2019-05-11
 ### Removed
 
-* Removed `--endpoint` from gitlab subcommand. It is taken care of via a global param now.
+* Removed `--endpoint` from bitbucket subcommand. It is taken care of via a global param now.
 
 ## [0.4.0] - 2019-05-11
 ### Added
