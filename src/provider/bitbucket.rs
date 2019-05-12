@@ -49,11 +49,18 @@ impl<'a> Provider for BitbucketArgs<'a> {
     fn auth_header(&self) -> String {
         "Authorization".to_string()
     }
+
+    fn ssh_url(&self, _: &reqwest::header::HeaderMap) -> Option<String> {
+        Some(format!(
+            "git@bitbucket.com:{}/{}.git",
+            &self.username, &self.name
+        ))
+    }
 }
 
 pub fn subcommand() -> App<'static, 'static> {
     SubCommand::with_name("bitbucket")
-        .version("0.4.0")
+        .version(env!("CARGO_PKG_VERSION"))
         .about("Create a repo on bitbucket.")
         .arg(
             Arg::with_name("name")
@@ -116,12 +123,6 @@ pub fn subcommand() -> App<'static, 'static> {
             Arg::with_name("language")
                 .long("language")
                 .help("Give bitbucket a hint about the programming language.")
-        ).arg(
-            Arg::with_name("endpoint")
-                .short("e")
-                .long("endpoint")
-                .help("Allows redirection of requests to enterprise providers.")
-                .takes_value(true)
         )
 }
 

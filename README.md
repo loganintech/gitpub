@@ -7,26 +7,28 @@ _Note:_ Environment variables can also be passed directly via CLI parameters, th
 Usage:
 
 ```
-Git Publish 0.4.0
+Git Publish 0.4.1
 Logan Saso <logansaso+tech@gmail.com>
 A small program to create remote git repositories from the command line.
 
 USAGE:
-    gitpub [OPTIONS] <SUBCOMMAND>
+    gitpub [FLAGS] [OPTIONS] <SUBCOMMAND>
 
 FLAGS:
-    -h, --help       Prints help information
-    -V, --version    Prints version information
+    -h, --help                 Prints help information
+        --set_remote           Sets the remote of the local dir after successful creation.
+        --ssh_remote_format    Attempts to convert the git remote url into ssh format. If it fails (the provider doesn't support ssh format), the remote isn't set.
+    -V, --version              Prints version information
 
 OPTIONS:
-        --endpoint <endpoint>
+        --endpoint <endpoint>          Sets a custom endpoint to POST to, useful if you want a private instance and know the api matches one gitpub supports.
+        --remote_name <remote_name>    Designates a custom name for setting remote. Defaults to origin.
 
 SUBCOMMANDS:
     bitbucket    Create a repo on bitbucket.
     github       Create a repo on github.
     gitlab       Create a repo on gitlab.
     help         Prints this message or the help of the given subcommand(s)
-
 ```
 
 ## Github Setup
@@ -38,7 +40,7 @@ _Note:_ If you want to create org repositories the token also requires `org` sco
 
 ### Github
 ```
-gitpub-github 0.4.0
+gitpub-github 0.4.1
 Create a repo on github.
 
 USAGE:
@@ -78,7 +80,7 @@ _Note_: Optionally set the `GITLAB_USERNAME` environment variable to enable prin
 
 ### Gitlab
 ```
-gitpub-gitlab 0.4.0
+gitpub-gitlab 0.4.1
 Create a repo on gitlab.
 
 USAGE:
@@ -129,7 +131,7 @@ OPTIONS:
 ### Bitbucket
 
 ```
-gitpub-bitbucket 0.4.0
+gitpub-bitbucket 0.4.1
 Create a repo on bitbucket.
 
 USAGE:
@@ -145,7 +147,6 @@ FLAGS:
 
 OPTIONS:
     -d, --description <description>    A short description of the repository.
-    -e, --endpoint <endpoint>          Allows redirection of requests to enterprise providers.
         --fork_policy <fork_policy>    Changes the allowed forking method for this repo. [possible values: allow_forks, no_public_forks, no_forks]
     -n, --name <name>                  The name of the new repository.
         --scm <scm>                    Control underlying source control method. [possible values: git, hg]

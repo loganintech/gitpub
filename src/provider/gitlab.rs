@@ -87,11 +87,18 @@ impl<'a> Provider for GitlabArgs<'a> {
     fn auth_header(&self) -> String {
         "Private-Token".to_string()
     }
+
+    fn ssh_url(&self, _: &reqwest::header::HeaderMap) -> Option<String> {
+        match std::env::var("GITLAB_USERNAME") {
+            Ok(u) => Some(format!("git@gitlab.com:{}/{}.git", u, self.project_name())),
+            _ => None,
+        }
+    }
 }
 
 pub fn subcommand() -> App<'static, 'static> {
     SubCommand::with_name("gitlab")
-        .version("0.4.0")
+        .version(env!("CARGO_PKG_VERSION"))
         .about("Create a repo on gitlab.")
         .arg(
             Arg::with_name("name")
