@@ -30,7 +30,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let headers = result.headers();
     match status {
         StatusCode::OK | StatusCode::CREATED => {
-            let apiloc = config.extract_url(&headers);&& can_use_ssh)
+            let apiloc = config.extract_url(&headers);
             let (remote_url, can_use_ssh) = match (
                 config.ssh_url(&headers),
                 matches.is_present("ssh_remote_format"),
@@ -54,15 +54,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     exit(404);
                 }
             }
-        }
+        },
         StatusCode::UNPROCESSABLE_ENTITY | StatusCode::BAD_REQUEST => {
             eprintln!("The provider had an issue processing this request. Perhaps the repository already exists, or you're using an unsupported option. e.g. Enabling projects on a repo in an org that has them disabled.");
             exit(2);
-        }
+        },
         StatusCode::UNAUTHORIZED => {
             eprintln!("You are unauthorized to create that repo.");
             exit(3);
-        }
+        },
         _ => {
             eprintln!("An unknown response was sent by the provider.");
             exit(42);
