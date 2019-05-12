@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.2] - 2019-05-12
+### Fixes
+
+* Fixed the way error handling was handled when setting git remote.
+
 ## [0.4.1] - 2019-05-11
 ### Removed
 

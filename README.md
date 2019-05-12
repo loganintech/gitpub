@@ -4,6 +4,8 @@ A small program to create remote git repositories from the command line.
 
 _Note:_ Environment variables can also be passed directly via CLI parameters, therefore setting said variables are always optional.
 
+_Note:_ API Versions in this README are based on the last time the CLI changed.
+
 Usage:
 
 ```
