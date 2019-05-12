@@ -6,6 +6,7 @@ use crate::provider::{
 };
 use clap::{App, AppSettings, Arg, ArgMatches};
 
+/// Enumerates the subcommand provider options available from subcommands.
 pub enum Gitpo<'a> {
     Github(GithubArgs<'a>),
     Gitlab(GitlabArgs<'a>),
@@ -13,6 +14,7 @@ pub enum Gitpo<'a> {
 }
 
 impl<'a> Gitpo<'a> {
+    /// from_matches constructs a subcommand config from the selected subcommand.
     pub fn from_matches(matches: &'a ArgMatches) -> Gitpo<'a> {
         match matches.subcommand_name() {
             Some("github") => Gitpo::Github(github::from_matches(
@@ -28,6 +30,9 @@ impl<'a> Gitpo<'a> {
         }
     }
 
+    /// as_provider
+    ///
+    /// Returns self as a reference to a Provider
     pub fn as_provider(&self) -> &dyn Provider {
         match self {
             Gitpo::Github(x) => x as &Provider,
@@ -37,6 +42,7 @@ impl<'a> Gitpo<'a> {
     }
 }
 
+/// ## Returns highest-level clap app.
 pub fn get_app() -> App<'static, 'static> {
     App::new("Git Publish")
         .global_setting(AppSettings::ColorAuto)
