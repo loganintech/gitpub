@@ -123,6 +123,7 @@ pub fn subcommand() -> App<'static, 'static> {
             Arg::with_name("language")
                 .long("language")
                 .help("Give bitbucket a hint about the programming language.")
+                .takes_value(true)
         )
 }
 

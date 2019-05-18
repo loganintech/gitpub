@@ -143,13 +143,13 @@ FLAGS:
     -i, --disable_issues    Disables issues for this repo. Defaults to false.
     -w, --disable_wiki      Disables wikis for this repo. Defaults to false.
     -h, --help              Prints help information
-        --language          Give bitbucket a hint about the programming language.
     -p, --private           Sets the repository to private.
     -V, --version           Prints version information
 
 OPTIONS:
     -d, --description <description>    A short description of the repository.
         --fork_policy <fork_policy>    Changes the allowed forking method for this repo. [possible values: allow_forks, no_public_forks, no_forks]
+        --language <language>          Give bitbucket a hint about the programming language.
     -n, --name <name>                  The name of the new repository.
         --scm <scm>                    Control underlying source control method. [possible values: git, hg]
     -t, --token <token>                A personal access token. Alternatively read from BITBUCKET_REPO_TOKEN env variable. [env: BITBUCKET_REPO_TOKEN=<YOUR_TOKEN>]
