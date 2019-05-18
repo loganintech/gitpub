@@ -133,7 +133,7 @@ OPTIONS:
 ### Bitbucket
 
 ```
-gitpub-bitbucket 0.4.1
+gitpub-bitbucket 0.4.3
 Create a repo on bitbucket.
 
 USAGE:

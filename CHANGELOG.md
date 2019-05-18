@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.3] - 2019-05-18
+### Fixes
+
+* The `--language` option for bitbucket now correctly accepts a value.
+
 ## [0.4.2] - 2019-05-12
 ### Fixes
 
