@@ -33,7 +33,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         StatusCode::OK | StatusCode::CREATED => {
             let apiloc = config.extract_url(&headers);
             println!("Repo created: {}", apiloc);
-            set_remote(&matches, &headers, config);
+
+            set_remote(&matches, &headers, config)
+                .map_err(|err| {
+                    eprintln!("{}", err.1);
+                    exit(err.0)
+                })
+                .unwrap();
         }
         StatusCode::UNPROCESSABLE_ENTITY | StatusCode::BAD_REQUEST => {
             eprintln!("The provider had an issue processing this request. Perhaps the repository already exists, or you're using an unsupported option. e.g. Enabling projects on a repo in an org that has them disabled.");
@@ -52,7 +58,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-fn set_remote(matches: &clap::ArgMatches, headers: &reqwest::header::HeaderMap, config: &dyn provider::Provider) {
+fn set_remote(
+    matches: &clap::ArgMatches,
+    headers: &reqwest::header::HeaderMap,
+    config: &dyn provider::Provider,
+) -> Result<(), (i32, &'static str)> {
     let (remote_url, can_use_ssh) = match (
         config.ssh_url(&headers),
         matches.is_present("ssh_remote_format"),
@@ -67,13 +77,13 @@ fn set_remote(matches: &clap::ArgMatches, headers: &reqwest::header::HeaderMap, 
 
     if matches.is_present("set_remote") {
         if matches.is_present("ssh_remote_format") && !can_use_ssh {
-            eprintln!("Can't use ssh format with this provider.");
-            exit(22);
+            return Err((22, "Can't use ssh format with this provider."));
         }
 
         if !git::add_remote(remote_name, &remote_url) {
-            eprintln!("Failed to add remote.");
-            exit(404);
+            return Err((404, "Failed to add remote."));
         }
     }
+
+    Ok(())
 }
