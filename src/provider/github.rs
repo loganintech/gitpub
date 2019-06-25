@@ -149,19 +149,19 @@ pub fn subcommand() -> App<'static, 'static> {
                 .help("License template: ex 'mit' or 'mpl-2.0'. View more at https://choosealicense.com/")
         ).arg(
             Arg::with_name("disable_squash")
-                .long("squash")
-                .help("Enables or disables squash-merging for this repo. Defaults to false.")
+                .long("disable_squash")
+                .help("Disables squash-merging for this repo.")
         ).arg(
             Arg::with_name("disable_merge")
-                .long("merge")
-                .help("Enables or disables merging with a merge commit. Defaults to false.")
+                .long("disable_merge")
+                .help("Disables merging with a merge commit.")
         ).arg(
             Arg::with_name("disable_rebase")
-                .long("rebase")
-                .help("Enables or disables rebase-merging for this repo. Defaults to false.")
+                .long("disable_rebase")
+                .help("Disables rebase-merging for this repo.")
         ).arg(
             Arg::with_name("org")
-                .long("org")
+                .long("disable_org")
                 .help("Creates the repo under an organization. Requires you have CREATE REPO permissions in that org.")
         )
 }

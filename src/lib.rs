@@ -89,6 +89,21 @@ fn handle_result(result: reqwest::Response, config: &dyn Provider, matches: &cla
 #[cfg(test)]
 mod test {
     use super::*;
+    fn check_success(matches: clap::ArgMatches) {
+        let config = Gitpo::from_matches(&matches);
+        let config = config.as_provider();
+
+        let request = configure_request(config, &matches);
+        let result = request.send().unwrap();
+
+        let status = result.status();
+
+        if status != StatusCode::CREATED && status != StatusCode::OK {
+            eprintln!("Status: {}", status);
+            panic!();
+        }
+    }
+
     #[test]
     fn github_integration() {
         use std::time::{SystemTime, UNIX_EPOCH};
@@ -100,7 +115,16 @@ mod test {
             "gitpub",
             "github",
             "-t",
-            include_str!("../keytest.txt").trim_end(),
+            include_str!("../test_config.txt")
+                .trim_end()
+                .split("\n")
+                .nth(0)
+                .unwrap()
+                .split(" ")
+                .nth(1)
+                .unwrap(),
+            "--disable_merge",
+            "--disable_rebase",
             "-i",
             "-w",
             "-r",
@@ -116,12 +140,80 @@ mod test {
             &format!("Test Repo {}", secs),
         ]);
 
-        let config = Gitpo::from_matches(&matches);
-        let config = config.as_provider();
+        check_success(matches);
+    }
 
-        let request = configure_request(config, &matches);
-        let result = request.send().unwrap();
+    #[test]
+    fn github_integration_disable_squash() {
+        use std::time::{SystemTime, UNIX_EPOCH};
+        let secs = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_secs();
+        let matches = cli::get_app().get_matches_from(vec![
+            "gitpub",
+            "github",
+            "-t",
+            include_str!("../test_config.txt")
+                .trim_end()
+                .split("\n")
+                .nth(0)
+                .unwrap()
+                .split(" ")
+                .nth(1)
+                .unwrap(),
+            "--disable_squash",
+            "-n",
+            &format!("Test Disable Squash {}", secs),
+        ]);
 
-        assert_eq!(result.status(), StatusCode::CREATED);
+        check_success(matches);
+    }
+
+    #[test]
+    fn gitlab() {
+        use std::time::{SystemTime, UNIX_EPOCH};
+        let secs = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_secs();
+        let matches = cli::get_app().get_matches_from(vec![
+            "gitpub",
+            "gitlab",
+            "-t",
+            include_str!("../test_config.txt")
+                .trim_end()
+                .split("\n")
+                .nth(1)
+                .unwrap()
+                .split(" ")
+                .nth(1)
+                .unwrap(),
+            "--disable_container_registry",
+            "--disable_jobs",
+            "--disable_merge",
+            "--disable_shared_runners",
+            "--disable_snippets",
+            "--discussion_resolution_required",
+            "-i",
+            "-w",
+            "-r",
+            "--large_file_support",
+            "--merge_request_link_on_commit",
+            "--mirror",
+            "--mirror_triggers_builds",
+            "--pipeline_success_required",
+            "--public_builds",
+            "--request_access_enabled",
+            "-d", &format!("Description {}", secs),
+            "--ci_config_path", "./example",
+            "--default_branch", "dev",
+            // "--merge_method", "ff",
+            "-n",
+            &format!("Test Repo {}", secs),
+            "--visibility", "private",
+        ]);
+
+        check_success(matches);
     }
 }
