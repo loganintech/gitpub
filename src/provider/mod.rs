@@ -15,5 +15,7 @@ pub trait Provider {
     /// The response header key. Like `Authorization` or `Bearer`
     fn auth_header(&self) -> String;
     /// Function that extracts ssh url format from headers. If this fails origin is unset (assuming the param was passed).
-    fn ssh_url(&self, _: &reqwest::header::HeaderMap) -> Option<String> { None }
+    fn ssh_url(&self, _: &reqwest::header::HeaderMap) -> Option<String> {
+        None
+    }
 }
